@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg4qfqmktgq6r"]
+
+[ext_resource type="Script" path="res://scr/movingplatform.gd" id="1_cewdp"]
+[ext_resource type="Texture2D" uid="uid://cmw5l4gjam2t1" path="res://spr/specialcoin.png" id="1_wuali"]
+
+[node name="movingplatform" type="Node2D"]
+script = ExtResource("1_cewdp")
+
+[node name="bolt" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("1_wuali")
+region_enabled = true
+region_rect = Rect2(37, 4, 4, 4)

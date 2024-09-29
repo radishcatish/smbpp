@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://8vw74hherkk6"
+path="res://.godot/imported/yoshisislandcave - Loeder.mp3-e327351e44faa923d562793df0748ad7.mp3str"
+
+[deps]
+
+source_file="res://mus/yoshisislandcave - Loeder.mp3"
+dest_files=["res://.godot/imported/yoshisislandcave - Loeder.mp3-e327351e44faa923d562793df0748ad7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
