@@ -1,11 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://buc2y2nh8106k"]
 
-[ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/Super Mario Bros. NES.ttf" id="1_d3gce"]
+[ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/misc/Super Mario Bros. NES.ttf" id="1_d3gce"]
 [ext_resource type="Script" path="res://scr/hud.gd" id="1_paryr"]
-[ext_resource type="Texture2D" uid="uid://di154bhw5y45t" path="res://spr/hpcounter/hpcounter.png" id="2_6osrg"]
-[ext_resource type="Texture2D" uid="uid://dfjnr08ghy0b6" path="res://spr/hpcounter/coinhpcount.png" id="3_g8cq2"]
-[ext_resource type="Texture2D" uid="uid://bvya85leb174y" path="res://spr/hpcounter/hpcountbg.png" id="4_rvsm8"]
-[ext_resource type="Texture2D" uid="uid://cwrhaas1xk1te" path="res://spr/hpcounter/hpcounttext.png" id="5_4fmnt"]
+[ext_resource type="Texture2D" uid="uid://di154bhw5y45t" path="res://spr/mario/hpcounter/hpcounter.png" id="2_6osrg"]
+[ext_resource type="Texture2D" uid="uid://dfjnr08ghy0b6" path="res://spr/mario/hpcounter/coinhpcount.png" id="3_g8cq2"]
+[ext_resource type="Texture2D" uid="uid://bvya85leb174y" path="res://spr/mario/hpcounter/hpcountbg.png" id="4_rvsm8"]
+[ext_resource type="Texture2D" uid="uid://cwrhaas1xk1te" path="res://spr/mario/hpcounter/hpcounttext.png" id="5_4fmnt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjuyy"]
 atlas = ExtResource("2_6osrg")

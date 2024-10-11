@@ -1,0 +1,25 @@
+Environment:
+
+	Expanded SMB1 tileset by:
+		Hot Cross Buns and Get Swiss Rolled
+		Heavily edited by radishcatish
+		https://mfgg.net/index.php?act=resdb&param=02&c=1&id=40682
+	
+		File: res://tilesets/basetilemap.png
+	
+	Other tilesets in res://tilesets/.. that aren't listed above are by:
+		radishcatish "radi"
+		radishcatish's boyfriend (jonatanleandoer for discord) "not", "casper"
+		And various others who gave feedback, thanks!
+	
+Music:
+	
+	All music starting with Pictionary in res://mus:
+		Pictionary (NES) OST
+	
+Sprites:
+	Any sprites or spritesheets not listed here are from Nintendo
+	
+	Mario
+		radishcatish
+		

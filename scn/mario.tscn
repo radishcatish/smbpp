@@ -1,9 +1,9 @@
 [gd_scene load_steps=184 format=3 uid="uid://cnybnjrewsp1x"]
 
 [ext_resource type="Script" path="res://scr/player.gd" id="1_8rros"]
-[ext_resource type="Texture2D" uid="uid://x0oofrtiob5a" path="res://spr/mariospritesheet.png" id="2_3w5q2"]
-[ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/Super Mario Bros. NES.ttf" id="2_616v5"]
-[ext_resource type="Texture2D" uid="uid://c0flwur8t263x" path="res://spr/mariogangnam.png" id="3_beohq"]
+[ext_resource type="Texture2D" uid="uid://x0oofrtiob5a" path="res://spr/mario/mariospritesheet.png" id="2_3w5q2"]
+[ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/misc/Super Mario Bros. NES.ttf" id="2_616v5"]
+[ext_resource type="Texture2D" uid="uid://c0flwur8t263x" path="res://spr/mario/mariogangnam.png" id="3_beohq"]
 [ext_resource type="AudioStream" uid="uid://cmq8rs30cpvij" path="res://snd/Kick.wav" id="6_o7pv3"]
 [ext_resource type="AudioStream" uid="uid://h3xoytuxbu8j" path="res://snd/Coin.wav" id="7_42qho"]
 [ext_resource type="AudioStream" uid="uid://bvalyba8k8tsy" path="res://snd/Hurt.wav" id="8_ehqb8"]
@@ -1296,7 +1296,6 @@ floor_stop_on_slope = false
 floor_constant_speed = true
 floor_block_on_wall = false
 floor_snap_length = 2.0
-platform_on_leave = 2
 script = ExtResource("1_8rros")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -1306,15 +1305,17 @@ texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_nj6jt")
 animation = &"gangnam"
 autoplay = "gangnam"
-frame_progress = 0.838512
+frame_progress = 0.928991
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_3hpo3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_fmmf7")
 

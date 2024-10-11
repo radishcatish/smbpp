@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://scm82onu12ne"]
+
+[ext_resource type="Script" path="res://scr/mariolight.gd" id="1_tl1oh"]
+[ext_resource type="Texture2D" uid="uid://cl08umopj1c40" path="res://spr/misc/circle.svg" id="2_7xdie"]
+[ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_q5dt0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kpewd"]
+radius = 8.0
+
+[sub_resource type="Gradient" id="Gradient_v8kae"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jlxix"]
+gradient = SubResource("Gradient_v8kae")
+
+[sub_resource type="Curve" id="Curve_a2ddp"]
+_data = [Vector2(0, 0.43956), 0.0, 0.0, 0, 0, Vector2(0.94, 0.252747), -0.30525, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lxs8u"]
+curve = SubResource("Curve_a2ddp")
+
+[sub_resource type="Curve" id="Curve_ogpkq"]
+max_value = 30.0
+_data = [Vector2(0.486667, 30), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_ijx1b"]
+curve = SubResource("Curve_ogpkq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jatl8"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 10.0
+orbit_velocity_min = -2.0
+orbit_velocity_max = 2.0
+velocity_limit_curve = SubResource("CurveTexture_ijx1b")
+gravity = Vector3(0, -100, 0)
+scale_min = 0.01
+scale_max = 0.01
+scale_curve = SubResource("CurveTexture_lxs8u")
+color_ramp = SubResource("GradientTexture1D_jlxix")
+
+[node name="mariolight" type="CharacterBody2D"]
+collision_layer = 0
+motion_mode = 1
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
+script = ExtResource("1_tl1oh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kpewd")
+
+[node name="ball" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.47451)
+scale = Vector2(0.008, 0.008)
+texture = ExtResource("2_7xdie")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+color = Color(0.500898, 0.84056, 0.64541, 1)
+energy = 0.54
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+shadow_filter = 2
+texture = ExtResource("3_q5dt0")
+
+[node name="ambient" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.266667)
+light_mask = 0
+position = Vector2(0, -1.19209e-07)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("3_q5dt0")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_jatl8")
+texture = ExtResource("2_7xdie")

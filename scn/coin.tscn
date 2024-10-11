@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://6b0rq2byybtt"]
 
 [ext_resource type="Script" path="res://scr/coin.gd" id="1_7i5vq"]
-[ext_resource type="Texture2D" uid="uid://b0302qluavvya" path="res://spr/coin.png" id="1_pajl6"]
-[ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/costume2.svg" id="3_nsvdl"]
+[ext_resource type="Texture2D" uid="uid://b0302qluavvya" path="res://spr/object/coin.png" id="1_pajl6"]
+[ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_nsvdl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2mwes"]
 atlas = ExtResource("1_pajl6")
@@ -57,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2x3hd")
 }, {
-"duration": 1.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_o3od7")
 }],
 "loop": false,
@@ -69,7 +69,8 @@ animations = [{
 size = Vector2(12, 16)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ymbq6"]
-polygon = PackedVector2Array(-3, -7, -3, -6, -4, -6, -4, -4, -5, -4, -5, 4, -4, 4, -4, 6, -3, 6, -3, 7, 3, 7, 3, 6, 4, 6, 4, 4, 5, 4, 5, -4, 4, -4, 4, -6, 3, -6, 3, -7)
+cull_mode = 1
+polygon = PackedVector2Array(-3, -7, -4, -6, -5, -4, -5, 4, -4, 6, -3, 7, 3, 7, 4, 6, 5, 4, 5, -4, 4, -6, 3, -7)
 
 [node name="Coin" type="Node2D"]
 texture_filter = 1
@@ -81,6 +82,7 @@ animation = &"animation"
 autoplay = "animation"
 
 [node name="sparkles" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_v3j4d")
 animation = &"animation"
 
@@ -97,3 +99,8 @@ occluder = SubResource("OccluderPolygon2D_ymbq6")
 color = Color(1, 1, 1, 0.34902)
 texture = ExtResource("3_nsvdl")
 texture_scale = 0.15
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 180.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

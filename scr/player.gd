@@ -115,19 +115,23 @@ func _process(delta):
 		move_toward(sprite.position.y, .25, 1)
 		)
 		
-	camera.offset = Vector2(
-		lerp(camera.offset.x, get_real_velocity().x / 8.0, 8 * delta),
-		lerp(camera.offset.y, clamp(-32.0 + get_real_velocity().y / 8.0, -24.0, 64.0), 8 * delta)
-		) 
-	
-
+	if not get_platform_velocity().length_squared():
+		camera.offset = Vector2(
+			lerp(camera.offset.x, get_real_velocity().x / 8.0, 8.0 * delta),
+			lerp(camera.offset.y, clamp(-32.0 + get_real_velocity().y / 8.0, -24.0, 64.0), 8.0 * delta)
+			) 
+	else:
+		camera.offset = Vector2(
+			lerp(camera.offset.x, get_real_velocity().x / 16.0, 8.0 * delta),
+			lerp(camera.offset.y, -24.0 + get_real_velocity().x / 24.0, 10.0 * delta)
+			) 
 		
 	
 		
 		
 	for area in area_2d.get_overlapping_areas():
 
-		if area.get_parent() is Coin and not area.get_parent().state > 0:
+		if area.get_parent() is Coin and area.get_parent().state == 0:
 			area.get_parent().state = 1
 			global.coins += 1
 			global.score += 3
@@ -163,7 +167,7 @@ func _process(delta):
 			
 
 func _physics_process(_delta):
-	
+
 	if last_pos != position:
 		positional_velocity = last_pos - position
 		last_pos = position
@@ -265,10 +269,10 @@ func _physics_process(_delta):
 		velocity.x = velocity.x + direction * (accelSpeed)
 	velocity.x *= friction
 
-
-
-	move_and_slide()
 	
+	velocity.y = clamp(velocity.y, -600, 500)
+	move_and_slide()
+
 func jump():
 
 	canJump = false
