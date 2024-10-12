@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=4 uid="uid://b1784fi0dusia"]
+
+[ext_resource type="PackedScene" uid="uid://bgospolx8ma8j" path="res://tilesets/basetilemap.tscn" id="1_vo666"]
+[ext_resource type="PackedScene" uid="uid://cnybnjrewsp1x" path="res://scn/mario.tscn" id="2_0aabg"]
+[ext_resource type="PackedScene" uid="uid://scm82onu12ne" path="res://scn/mariolight.tscn" id="3_elwrw"]
+
+[node name="Node" type="Node"]
+metadata/_edit_vertical_guides_ = [73.0]
+
+[node name="basetilemap" parent="." instance=ExtResource("1_vo666")]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAFAP7/AAASAA0AAAADAP7/AAARAA0AAAAEAP7/AAARAA4AAAAHAP7/AAATAA4AAAAIAP7/AAAUAA4AAAAJAP7/AAAVAA4AAAALAP//AAAXAA8AAAAKAP//AAAWAA8AAAAMAP//AAAZAA8AAAAJAP//AAAZAA4AAAA=")
+
+[node name="Mario" parent="." instance=ExtResource("2_0aabg")]
+position = Vector2(35, -13)
+
+[node name="mariolight" parent="." instance=ExtResource("3_elwrw")]
+position = Vector2(33, -16)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.201527, 0.201527, 0.201527, 1)

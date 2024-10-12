@@ -70,6 +70,7 @@ shadow_filter = 2
 texture = ExtResource("3_q5dt0")
 
 [node name="ambient" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.266667)
 light_mask = 0
 position = Vector2(0, -1.19209e-07)
