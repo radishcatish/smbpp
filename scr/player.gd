@@ -252,18 +252,12 @@ func _physics_process(_delta):
 			elif not state == PlayerStates.wavedash:
 				state = PlayerStates.walk
 				
-			if ((direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0)) and abs(velocity.x) < 35:
+			if ((direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0)) and abs(velocity.x) > 45:
 					state = PlayerStates.skid
 			print(velocity.x)
 			if Input.is_action_pressed("down") and state == PlayerStates.idle or state == PlayerStates.crouch:
 				state = PlayerStates.crouch
-			if Input.is_action_just_pressed("down"):
-				
-				if state == PlayerStates.walk:
-					direction = 0
-					state = PlayerStates.wavedash
-					velocity.x = 230 * directionnotzero
-					friction = .99
+
 					
 
 		
@@ -343,7 +337,7 @@ func walljumpcode():
 		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1) and direction != 0:
 
 			state = PlayerStates.wallslide
-			velocity.y = 50
+			
 		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerStates.wallslide:
 			if Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped():
 

@@ -1293,7 +1293,6 @@ size = Vector2(8, 11)
 [node name="Mario" type="CharacterBody2D" groups=["Player"]]
 floor_stop_on_slope = false
 floor_constant_speed = true
-floor_block_on_wall = false
 floor_snap_length = 2.0
 script = ExtResource("1_8rros")
 
@@ -1364,6 +1363,7 @@ volume_db = -10.0
 stream = ExtResource("8_ehqb8")
 
 [node name="temp" type="RichTextLabel" parent="."]
+visible = false
 texture_filter = 1
 offset_left = -40.0
 offset_top = -40.0

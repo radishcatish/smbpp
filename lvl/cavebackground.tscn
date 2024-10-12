@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://51q6v0lr6uxo"]
+
+[ext_resource type="Script" path="res://scr/cavebackground.gd" id="1_gkunv"]
+[ext_resource type="Texture2D" uid="uid://y40tkxd8x5y1" path="res://tilesets/backgroundcave.png" id="1_tqsiu"]
+
+[node name="cavebackground" type="Node2D"]
+z_index = -10
+script = ExtResource("1_gkunv")
+
+[node name="block" type="Sprite2D" parent="."]
+modulate = Color(0.788235, 0.662745, 0.662745, 1)
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_tqsiu")
+region_enabled = true
+region_rect = Rect2(0, 0, 32000, 32000)
