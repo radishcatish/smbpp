@@ -24,8 +24,8 @@ func _process(_delta: float) -> void:
 		coins_counter.text = " %06d" % coins
 		score_counter.text = " %07d" % score
 		hpcircle.play(str(mario.health)) 
-		if mario.coinsuntilhp != 0:
-			coinhpcount.play(str(mario.coinsuntilhp))
+		if mario.coins_until_hp != 0:
+			coinhpcount.play(str(mario.coins_until_hp))
 			
 		if mario.health == 3:
 			coinhpcount.play("1")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=184 format=3 uid="uid://cnybnjrewsp1x"]
+[gd_scene load_steps=185 format=3 uid="uid://cnybnjrewsp1x"]
 
 [ext_resource type="Script" path="res://scr/player.gd" id="1_8rros"]
 [ext_resource type="Texture2D" uid="uid://x0oofrtiob5a" path="res://spr/mario/mariospritesheet.png" id="2_3w5q2"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://bvalyba8k8tsy" path="res://snd/Hurt.wav" id="8_ehqb8"]
 [ext_resource type="AudioStream" uid="uid://cred55pffpb4c" path="res://snd/Jump.wav" id="9_fqcbj"]
 [ext_resource type="AudioStream" uid="uid://bs8eb34ong7ap" path="res://snd/Skid.wav" id="10_hyi3h"]
+[ext_resource type="Texture2D" uid="uid://ck5md37sya6cx" path="res://tilesets/ice.png" id="11_g5txa"]
 [ext_resource type="AudioStream" uid="uid://dk3etdv2afwcx" path="res://snd/Bump.wav" id="12_wqmvg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4kx1a"]
@@ -1287,8 +1288,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hpo3"]
 size = Vector2(8, 14)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8a0ke"]
-size = Vector2(8, 11)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmmf7"]
+radius = 4.0
+height = 14.0
 
 [node name="Mario" type="CharacterBody2D" groups=["Player"]]
 floor_stop_on_slope = false
@@ -1307,14 +1309,16 @@ autoplay = "gangnam"
 frame_progress = 0.928991
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_3hpo3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_8a0ke")
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_fmmf7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
@@ -1379,6 +1383,13 @@ bbcode_enabled = true
 text = "[center] text [/center]"
 scroll_active = false
 autowrap_mode = 0
+
+[node name="Ice" type="Sprite2D" parent="."]
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("11_g5txa")
+offset = Vector2(0, -24)
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 48)
 
 [connection signal="timeout" from="tmr/coyotetime" to="." method="coyotetimetimeout"]
 [connection signal="timeout" from="tmr/stuntime" to="." method="_on_stuntime_timeout"]

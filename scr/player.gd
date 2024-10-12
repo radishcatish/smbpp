@@ -16,7 +16,7 @@ class_name player
 @onready var snd_coin: AudioStreamPlayer = $snd/coin
 @onready var tmr_stuntime: Timer = $tmr/stuntime
 @onready var snd_hurt: AudioStreamPlayer = $snd/hurt
-@onready var  tmr_iframes: Timer = $tmr/iframes
+@onready var tmr_iframes: Timer = $tmr/iframes
 
 #endregion
 
@@ -24,33 +24,37 @@ class_name player
 
 var pause := false
 var direction = 1 
-var walkSpeed := 90
-var accelSpeed := 8.0
 var friction := .99
-var canJump := true
+var can_jump := true
 var health := 3
 var last_not_on_floor := false
 var just_now_not_on_floor := false
 var last_on_floor := false
 var just_now_on_floor := false
-var beforeCeilingHitYVel := 0.0
-
+var ceiling_hit_velocity := 0.0
+var floor_angle: float = 0
 var just_now_not_on_wall_only := false
 var last_not_on_wall_only := false
-var lastWalljumpDir: int = 0
-var coinsuntilhp := 0
-var storedYVel := 0.0
+var last_walljump_direction: int = 0
+var coins_until_hp := 0
+var y_inertia := 0.0
 var directionnotzero = 1
-var speedMod := 0.0
 var last_pos := Vector2.ZERO
 var positional_velocity := Vector2.ZERO
-enum plrStates {none, idle, walk, jump, fall, skid, hurt, wallslide, crouch, wavedash}
-var state := plrStates.none
 
+
+
+enum PlayerStates {none, idle, walk, jump, fall, skid, hurt, wallslide, crouch, wavedash}
+var state := PlayerStates.none
+
+const JUMP_HEIGHT: float = -250
+const RUN_SPEED := 160
+const ACCEL := 8.0
 
 func _process(delta):
-	sprite.skew = (velocity.x / 720)
-	$temp.text = "\n [center]" + plrStates.find_key(state) + "[/center]"
+	sprite.skew = (velocity.x / 720) * .9
+	sprite.rotation = floor_angle / 2
+	$temp.text = "\n [center]" + PlayerStates.find_key(state) + "[/center]"
 
 	if direction == 1: sprite.flip_h = false
 	if direction == -1: sprite.flip_h = true
@@ -60,38 +64,38 @@ func _process(delta):
 	
 	
 	match state:
-		plrStates.none:
+		PlayerStates.none:
 			sprite.play(&"gangnam")
 
-		plrStates.idle:
+		PlayerStates.idle:
 			sprite.play(&"idle")
 
-		plrStates.walk:
+		PlayerStates.walk:
 			sprite.play(&"walk", self.velocity.x / 154)
 
-		plrStates.jump:
+		PlayerStates.jump:
 			sprite.play(&"jump")
 			
-		plrStates.fall:
+		PlayerStates.fall:
 			sprite.play(&"fall")
-			if velocity.y > 250:
+			if velocity.y > -JUMP_HEIGHT:
 				sprite.play(&"fastfall")
 				
-		plrStates.hurt:
+		PlayerStates.hurt:
 			sprite.play(&"hurt")
 			
-		plrStates.crouch:
+		PlayerStates.crouch:
 			sprite.play(&"crouch")
 			
-		plrStates.wallslide:
+		PlayerStates.wallslide:
 			sprite.play(&"wallsliding")
 			
-		plrStates.skid:
+		PlayerStates.skid:
 			sprite.play(&"skid")
 			if not snd_skid.is_playing():
 				snd_skid.play()
 				
-		plrStates.wavedash:
+		PlayerStates.wavedash:
 			sprite.play(&"wavedash")
 			
 	var flicker: bool = true
@@ -136,25 +140,25 @@ func _process(delta):
 			global.coins += 1
 			global.score += 3
 			snd_coin.play()
-			if coinsuntilhp >= 5:
+			if coins_until_hp >= 5:
 				health += 1
-				coinsuntilhp = 0
+				coins_until_hp = 0
 
 				global.hpcounter.scale = Vector2(1.1,1.1)
 				get_tree().create_tween().tween_property(global.hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
 			if not health >= 3:
-				coinsuntilhp += 1
+				coins_until_hp += 1
 			else:
-				coinsuntilhp = clamp(coinsuntilhp, 0, 4)
+				coins_until_hp = clamp(coins_until_hp, 0, 4)
 
 				
 			
-		if area.name == "hurtbox" and ((not state == plrStates.hurt) and tmr_iframes.is_stopped()):
+		if area.name == "hurtbox" and ((not state == PlayerStates.hurt) and tmr_iframes.is_stopped()):
 			velocity.x =  int(sprite.scale.x) * -300
 			health -= area.damage
 			tmr_stuntime.start()
 			sprite.play(&"hurt")
-			state = plrStates.hurt
+			state = PlayerStates.hurt
 			velocity.y = -200
 			sprite.skew = 0
 			sprite.scale.y = 1
@@ -167,18 +171,27 @@ func _process(delta):
 			
 
 func _physics_process(_delta):
+	
+	if abs(velocity.x) < 30 and not direction:
+		velocity.x = 0
+	
+	if is_on_floor():
+		floor_angle =  get_floor_angle(up_direction) * sign(get_floor_normal().x)
+	else:
+		floor_angle = 0
 
+		
 	if last_pos != position:
 		positional_velocity = last_pos - position
 		last_pos = position
-		
-	if not state in [plrStates.hurt, plrStates.wavedash]:
+	floor_snap_length = 8 + positional_velocity.length()
+	if not state in [PlayerStates.hurt, PlayerStates.wavedash]:
 		direction = Input.get_axis("left", "right")
 		
 	if direction != 0:
 		directionnotzero = direction
 		
-	if direction == 0 and not state == plrStates.wavedash: 
+	if direction == 0 and not state == PlayerStates.wavedash: 
 		friction = .8
 	else: 
 		friction = .99
@@ -212,61 +225,60 @@ func _physics_process(_delta):
 			just_now_on_floor = true
 			last_on_floor = is_on_floor()
 #endregion
-		
-
-		if not Input.is_action_pressed("C"): 
-			walkSpeed = 160
-		else:
-			walkSpeed = 90
+	
 			
-		if state == plrStates.wavedash and abs(velocity.x) < walkSpeed:
-			state = plrStates.walk
+		if state == PlayerStates.wavedash and abs(velocity.x) < RUN_SPEED:
+			state = PlayerStates.walk
 			
 		if is_on_floor():
-			velocity.x += get_floor_normal().x * 5
+			if direction:
+				velocity.x += get_floor_normal().x * 10
+			if abs(floor_angle) > .79:
+				velocity.x += get_floor_normal().x * 30
+			print(floor_angle)
 			tmr_wallcoyotetime.stop()
-			lastWalljumpDir = 0
-			canJump = true
+			last_walljump_direction = 0
+			can_jump = true
 			
-			if !just_now_on_floor and Input.is_action_pressed("down") and not state == plrStates.wavedash:
+			if !just_now_on_floor and Input.is_action_pressed("down") and not state == PlayerStates.wavedash:
 				direction = 0
-				state = plrStates.wavedash
-				velocity.x = (230 + storedYVel / 8) * directionnotzero
+				state = PlayerStates.wavedash
+				velocity.x = (230 + y_inertia / 8) * directionnotzero
 				friction = .99
 
 
 			if abs(velocity.x) < 25 and direction == 0:
-				state = plrStates.idle
-			elif not state == plrStates.wavedash:
-				state = plrStates.walk
+				state = PlayerStates.idle
+			elif not state == PlayerStates.wavedash:
+				state = PlayerStates.walk
 				
-			if (direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0):
-				state = plrStates.skid
-
-			if Input.is_action_pressed("down") and state == plrStates.idle or state == plrStates.crouch:
-				state = plrStates.crouch
+			if ((direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0)) and abs(velocity.x) < 35:
+					state = PlayerStates.skid
+			print(velocity.x)
+			if Input.is_action_pressed("down") and state == PlayerStates.idle or state == PlayerStates.crouch:
+				state = PlayerStates.crouch
 			if Input.is_action_just_pressed("down"):
 				
-				if state == plrStates.walk:
+				if state == PlayerStates.walk:
 					direction = 0
-					state = plrStates.wavedash
+					state = PlayerStates.wavedash
 					velocity.x = 230 * directionnotzero
 					friction = .99
 					
 
 		
-		if (Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped()) and canJump: 
+		if (Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped()) and can_jump: 
 			jump()
 		if not is_on_floor(): midair()
 	else:
 		velocity.y += 14
 		velocity.x *= 0.9
-		state = plrStates.hurt
+		state = PlayerStates.hurt
 		direction = 0
 		
 
-	if not abs(velocity.x) > walkSpeed:
-		velocity.x = velocity.x + direction * (accelSpeed)
+	if not abs(velocity.x) > RUN_SPEED:
+		velocity.x = velocity.x + direction * (ACCEL)
 	velocity.x *= friction
 
 	
@@ -275,29 +287,29 @@ func _physics_process(_delta):
 
 func jump():
 
-	canJump = false
-	if abs(-get_floor_normal().x) < 0.1:
-		velocity.y = -250 + clamp(abs(velocity.x / 3) * -1, -100, 100) + (positional_velocity.y * -30)
+	can_jump = false
+	if abs(-get_floor_normal().x) < 0.5:
+		velocity.y = JUMP_HEIGHT + clamp(abs(velocity.x / 3) * -1, -100, 100) + (positional_velocity.y * -30)
 	else:
-		velocity.y = -get_floor_normal().y * (-250 + (positional_velocity.y * -30) )
+		velocity.y = -get_floor_normal().y * (JUMP_HEIGHT + (positional_velocity.y * -30) )
 		
-		velocity.x = -get_floor_normal().x * (-250 + (positional_velocity.x * 30) + positional_velocity.y * 30)
+		velocity.x = 1.5 * -get_floor_normal().x * (-200 + positional_velocity.y * 30)
 	position.y -= 3
-	state = plrStates.jump
+	state = PlayerStates.jump
 	sprite.scale.y = 1.5
 	snd_jump.play()
 	snd_jump.pitch_scale = 1 + clamp(abs(velocity.x) / 1000, 0.0, 0.200)
 	
 	
 func midair():
-	storedYVel = velocity.y
+	y_inertia = velocity.y
 	friction = .99
 	
 	if just_now_not_on_floor: tmr_coyotetime.start()
-	if velocity.y < -50 and not state == plrStates.wallslide:
-		state = plrStates.jump
+	if velocity.y < -50 and not state == PlayerStates.wallslide:
+		state = PlayerStates.jump
 	else:
-		state = plrStates.fall
+		state = PlayerStates.fall
 		
 	velocity.y += 14 - (int(Input.is_action_pressed("Z")) * 3) + sign(velocity.y) 
 	
@@ -313,39 +325,41 @@ func midair():
 		velocity.y = 200
 	
 	if not is_on_ceiling() and velocity.y < 0: 
-		beforeCeilingHitYVel = velocity.y 
+		ceiling_hit_velocity = velocity.y 
 		
 	if is_on_ceiling_only():
 		position.y += 2
-		velocity.y -= beforeCeilingHitYVel / 4
-		sprite.scale.y = .9 - ((beforeCeilingHitYVel * -1)) / 800
-		sprite.scale.x = 1 + ((beforeCeilingHitYVel * -1)) / 800
-		sprite.position.y =  2 - (beforeCeilingHitYVel) / 100
+		velocity.y -= ceiling_hit_velocity / 4
+		sprite.scale.y = .9 - ((ceiling_hit_velocity * -1)) / 800
+		sprite.scale.x = 1 + ((ceiling_hit_velocity * -1)) / 800
+		sprite.position.y =  2 - (ceiling_hit_velocity) / 100
 		snd_jump.stop()
 		snd_bump.play()
 
 func walljumpcode():
+	
+	var walljumpangle =  -int(Input.is_action_pressed("up"))
 	if !pause or tmr_stuntime.is_stopped():
-		if is_on_wall_only() and (get_wall_normal().x > 0 and not lastWalljumpDir == 1 or get_wall_normal().x < 0 and not lastWalljumpDir == -1) and direction != 0:
+		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1) and direction != 0:
 
-			state = plrStates.wallslide
-
-		if (not tmr_wallcoyotetime.is_stopped()) or state == plrStates.wallslide:
+			state = PlayerStates.wallslide
+			velocity.y = 50
+		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerStates.wallslide:
 			if Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped():
 
 				snd_kick.play()
-				state = plrStates.jump
+				state = PlayerStates.jump
 				tmr_jumpqueue.stop()
 				sprite.scale.y = 1.35
-				velocity.y = -300
+				velocity.y = JUMP_HEIGHT + (walljumpangle * 30)
 				
-				if get_wall_normal().x > 0 and not lastWalljumpDir == 1:
-					lastWalljumpDir = 1
-					velocity.x = walkSpeed 
-				if get_wall_normal().x < 0 and not lastWalljumpDir == -1:
-					lastWalljumpDir = -1
-					velocity.x = -walkSpeed
+				if get_wall_normal().x > 0 and not last_walljump_direction == 1:
+					last_walljump_direction = 1
+					velocity.x = RUN_SPEED - walljumpangle * 30
+				if get_wall_normal().x < 0 and not last_walljump_direction == -1:
+					last_walljump_direction = -1
+					velocity.x = -RUN_SPEED - walljumpangle * 30
 				tmr_wallcoyotetime.stop()
 # Timers
-func coyotetimetimeout(): canJump = false
+func coyotetimetimeout(): can_jump = false
 func _on_stuntime_timeout(): tmr_iframes.start()
