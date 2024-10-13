@@ -380,7 +380,6 @@ func attackhandler():
 		dive()
 
 func kick():
-	
 	if did_midair_action == false:
 		snd_kick.play()
 		velocity.y = JUMP_HEIGHT 
@@ -402,7 +401,7 @@ func dive():
 		state = PlayerState.DIVE
 		did_midair_action = true
 		snd_dive.play()
-	
+
 func interactions(area):
 	if area.get_parent() is Coin and area.get_parent().state == 0:
 		area.get_parent().state = 1
@@ -422,7 +421,7 @@ func interactions(area):
 		
 		
 	if area is Hurtbox and ((not state == PlayerState.HURT) and tmr_iframes.is_stopped()):
-		velocity.x =  int(sprite.scale.x) * -300
+		velocity.x =  directionnotzero * -300
 		health -= area.get_owner().DAMAGE
 		tmr_stuntime.start()
 		sprite.play(&"hurt")
