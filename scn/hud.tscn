@@ -89,7 +89,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_3wgso")
 }],
 "loop": true,
-"name": &"1",
+"name": &"0",
 "speed": 5.0
 }, {
 "frames": [{
@@ -97,7 +97,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dfgwa")
 }],
 "loop": true,
-"name": &"2",
+"name": &"1",
 "speed": 5.0
 }, {
 "frames": [{
@@ -105,7 +105,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_kjmfr")
 }],
 "loop": true,
-"name": &"3",
+"name": &"2",
 "speed": 5.0
 }, {
 "frames": [{
@@ -113,7 +113,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_xla8b")
 }],
 "loop": true,
-"name": &"4",
+"name": &"3",
 "speed": 5.0
 }, {
 "frames": [{
@@ -121,7 +121,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_3ycgt")
 }],
 "loop": true,
-"name": &"5",
+"name": &"4",
 "speed": 5.0
 }, {
 "frames": [{
@@ -203,7 +203,7 @@ frame_progress = 0.826546
 [node name="coinhpcount" type="AnimatedSprite2D" parent="hpcounter"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6ol20")
-animation = &"1"
+animation = &"0"
 
 [node name="bg" type="Sprite2D" parent="hpcounter"]
 z_index = -2

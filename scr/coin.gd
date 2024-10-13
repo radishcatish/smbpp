@@ -1,5 +1,6 @@
 extends Node2D
 class_name Coin
+const COIN_AMOUNT = 1
 var state = 0
 @onready var coin: AnimatedSprite2D = $coin
 @onready var sparkles: AnimatedSprite2D = $sparkles

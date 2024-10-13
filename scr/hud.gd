@@ -24,16 +24,18 @@ func _process(_delta: float) -> void:
 		coins_counter.text = " %06d" % coins
 		score_counter.text = " %07d" % score
 		hpcircle.play(str(mario.health)) 
-		if mario.coins_until_hp != 0:
-			coinhpcount.play(str(mario.coins_until_hp))
-			
-		if mario.health == 3:
-			coinhpcount.play("1")
+		coinhpcount.play(str(mario.coins_until_hp))
 			
 		if healthbefore != mario.health:
-			print (healthbefore - mario.health)
+			
+			if healthbefore < 0:
+				hpcounter.scale = Vector2(1.1,1.1)
+				get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
+			else:
+				hpcounter.scale = Vector2(.9,.9)
+				get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
 		
 		healthbefore = mario.health
-	
-	
+		
+
 	

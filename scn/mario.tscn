@@ -1,8 +1,9 @@
-[gd_scene load_steps=37 format=3 uid="uid://cnybnjrewsp1x"]
+[gd_scene load_steps=46 format=3 uid="uid://cnybnjrewsp1x"]
 
 [ext_resource type="Script" path="res://scr/player.gd" id="1_8rros"]
 [ext_resource type="Texture2D" uid="uid://x0oofrtiob5a" path="res://spr/mario/mariospritesheet.png" id="2_3w5q2"]
 [ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/misc/Super Mario Bros. NES.ttf" id="2_616v5"]
+[ext_resource type="AudioStream" uid="uid://8i617b8crluc" path="res://snd/whoosh.wav" id="3_oapd4"]
 [ext_resource type="AudioStream" uid="uid://cmq8rs30cpvij" path="res://snd/Kick.wav" id="6_o7pv3"]
 [ext_resource type="AudioStream" uid="uid://h3xoytuxbu8j" path="res://snd/Coin.wav" id="7_42qho"]
 [ext_resource type="AudioStream" uid="uid://bvalyba8k8tsy" path="res://snd/Hurt.wav" id="8_ehqb8"]
@@ -25,6 +26,18 @@ region = Rect2(16, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kma0r"]
 atlas = ExtResource("2_3w5q2")
 region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epnbl"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(0, 176, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lq2b"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(32, 176, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kq5nw"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(64, 176, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6q1oq"]
 atlas = ExtResource("2_3w5q2")
@@ -49,6 +62,26 @@ region = Rect2(32, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6yqku"]
 atlas = ExtResource("2_3w5q2")
 region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icqn3"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(32, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wshp7"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(0, 208, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwu48"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(48, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pxnp"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(64, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mu30o"]
+atlas = ExtResource("2_3w5q2")
+region = Rect2(80, 208, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i40xa"]
 atlas = ExtResource("2_3w5q2")
@@ -102,10 +135,6 @@ region = Rect2(32, 16, 16, 16)
 atlas = ExtResource("2_3w5q2")
 region = Rect2(0, 144, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lcl2n"]
-atlas = ExtResource("2_3w5q2")
-region = Rect2(0, 176, 21, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_nj6jt"]
 animations = [{
 "frames": [{
@@ -133,6 +162,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epnbl")
+}],
+"loop": true,
+"name": &"dive",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lq2b")
+}],
+"loop": true,
+"name": &"dive_flipped",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kq5nw")
+}],
+"loop": true,
+"name": &"dive_sliding",
 "speed": 5.0
 }, {
 "frames": [{
@@ -182,6 +235,32 @@ animations = [{
 "loop": true,
 "name": &"jump",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_icqn3")
+}, {
+"duration": 1.1,
+"texture": SubResource("AtlasTexture_wshp7")
+}, {
+"duration": 1.1,
+"texture": SubResource("AtlasTexture_icqn3")
+}, {
+"duration": 1.1,
+"texture": SubResource("AtlasTexture_qwu48")
+}, {
+"duration": 1.1,
+"texture": SubResource("AtlasTexture_4pxnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mu30o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mu30o")
+}],
+"loop": false,
+"name": &"kick",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -246,18 +325,13 @@ animations = [{
 "loop": true,
 "name": &"wallsliding",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lcl2n")
-}],
-"loop": true,
-"name": &"wavedash",
-"speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j83pj"]
+size = Vector2(1, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hpo3"]
-size = Vector2(8, 14)
+size = Vector2(8, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8a0ke"]
 size = Vector2(8, 11)
@@ -265,28 +339,37 @@ size = Vector2(8, 11)
 [node name="Mario" type="CharacterBody2D" groups=["Player"]]
 floor_stop_on_slope = false
 floor_constant_speed = true
+floor_max_angle = 1.39626
 floor_snap_length = 2.0
 script = ExtResource("1_8rros")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="sprite" type="AnimatedSprite2D" parent="."]
 physics_interpolation_mode = 2
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_nj6jt")
-animation = &"idle"
+animation = &"dive_sliding"
 autoplay = "idle"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="damagebox" type="Area2D" parent="."]
+monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damagebox"]
+shape = SubResource("RectangleShape2D_j83pj")
+debug_color = Color(0.988311, 0, 0.303416, 0.42)
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_3hpo3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_8a0ke")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="camera" type="Camera2D" parent="."]
 ignore_rotation = false
 editor_draw_screen = false
 
@@ -313,6 +396,9 @@ wait_time = 2.0
 one_shot = true
 
 [node name="snd" type="Node" parent="."]
+
+[node name="dive" type="AudioStreamPlayer" parent="snd"]
+stream = ExtResource("3_oapd4")
 
 [node name="jump" type="AudioStreamPlayer" parent="snd"]
 stream = ExtResource("9_fqcbj")

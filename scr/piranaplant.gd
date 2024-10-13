@@ -1,4 +1,6 @@
 extends Node2D
+class_name Enemy
+const DAMAGE: int = 1
 @export var isInPipe: bool
 @export var aggression: float
 @onready var stem: Sprite2D = $stem
@@ -35,6 +37,7 @@ func _physics_process(_delta: float) -> void:
 		animationposition += (0.05 + aggression / 7.0)
 		stem.position.y = (sin(animationposition) * 16)
 	
+
 
 
 func _on_mouth_frame_changed() -> void:
