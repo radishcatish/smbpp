@@ -134,6 +134,7 @@ animations = [{
 }]
 
 [node name="hud" type="CanvasLayer"]
+layer = 128
 follow_viewport_scale = 0.001
 script = ExtResource("1_paryr")
 
@@ -215,3 +216,7 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(9.5, 10.5)
 texture = ExtResource("5_4fmnt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visibility_layer = 2
+texture_filter = 1

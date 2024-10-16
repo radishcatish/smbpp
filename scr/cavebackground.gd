@@ -11,4 +11,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	position = (mario.camera.offset + mario.position) / 6
+	position = (global.camera.offset + global.camera.position) / 8

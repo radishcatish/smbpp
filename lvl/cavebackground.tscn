@@ -4,11 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://y40tkxd8x5y1" path="res://tilesets/backgroundcave.png" id="1_tqsiu"]
 
 [node name="cavebackground" type="Node2D"]
+modulate = Color(0.678944, 0.678944, 0.678944, 1)
+light_mask = 0
 z_index = -10
 script = ExtResource("1_gkunv")
 
 [node name="block" type="Sprite2D" parent="."]
-modulate = Color(0.788235, 0.662745, 0.662745, 1)
+light_mask = 0
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("1_tqsiu")

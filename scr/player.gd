@@ -3,7 +3,7 @@ class_name player
 #Nodes
 #region Nodes
 @onready var sprite: AnimatedSprite2D = $sprite
-@onready var camera: Camera2D = $camera
+
 @onready var collision: CollisionShape2D = $collision
 @onready var damage_box: Area2D = $damagebox
 @onready var hitbox: Area2D = $hitbox
@@ -173,16 +173,7 @@ func _process(delta):
 		move_toward(sprite.position.y, .25, 1)
 		)
 		
-	if not get_platform_velocity().length_squared():
-		camera.offset = Vector2(
-			lerp(camera.offset.x, get_real_velocity().x / 8.0, 8.0 * delta),
-			lerp(camera.offset.y, clamp(-32.0 + get_real_velocity().y / 8.0, -24.0, 64.0), 8.0 * delta)
-			) 
-	else:
-		camera.offset = Vector2(
-			lerp(camera.offset.x, get_real_velocity().x / 16.0, 6.0 * delta),
-			lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + get_real_velocity().x / 24.0, 10.0 * delta)
-			) 
+
 	
 
 	
@@ -365,7 +356,7 @@ func walljumpcode():
 					if get_wall_normal().x < 0 and not last_walljump_direction == -1:
 						last_walljump_direction = -1
 						velocity.x = -RUN_SPEED - walljumpangle * 30
-					tmr_wallcoyotetime.stop()	
+					tmr_wallcoyotetime.stop()
 
 func attackhandler():
 	if !direction or is_on_floor():

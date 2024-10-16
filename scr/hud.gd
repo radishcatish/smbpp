@@ -7,6 +7,10 @@ extends CanvasLayer
 @onready var coinhpcount: AnimatedSprite2D = $hpcounter/coinhpcount
 @onready var bg: Sprite2D = $hpcounter/bg
 @onready var text: Sprite2D = $hpcounter/text
+@onready var camera: Camera2D = $Camera2D
+var last_pos = Vector2.ZERO
+var positional_velocity = Vector2.ZERO
+
 @onready var mario = get_tree().get_first_node_in_group("Player")
 var marioexists: bool = true
 
@@ -19,7 +23,7 @@ func _ready() -> void:
 var coins: int = 0
 var score: int = 0
 var healthbefore: int
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if marioexists == true:
 		coins_counter.text = " %06d" % coins
 		score_counter.text = " %07d" % score
@@ -36,6 +40,20 @@ func _process(_delta: float) -> void:
 				get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
 		
 		healthbefore = mario.health
+		camera.position = mario.position
+		if last_pos != camera.position:
+			positional_velocity = last_pos - camera.position
+			positional_velocity *= -60
+			last_pos = camera.position
+		if not mario.get_platform_velocity().length_squared():
+			camera.offset = Vector2(
+				lerp(camera.offset.x, positional_velocity.x / 8.0, 8.0 * delta),
+				lerp(camera.offset.y, clamp(-32.0 + positional_velocity.y / 8.0, -24.0, 64.0), 8.0 * delta)
+				) 
+		else:
+			camera.offset = Vector2(
+				lerp(camera.offset.x,  positional_velocity.x / 16.0, 6.0 * delta),
+				lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + positional_velocity.y / 24.0, 10.0 * delta)
+				) 
 		
-
 	
