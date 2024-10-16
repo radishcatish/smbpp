@@ -7,7 +7,7 @@ var state = 0
 @onready var shape: Area2D = $shape
 @onready var timer: Timer = $Timer
 
-@onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
+
 @onready var point_light_2d: PointLight2D = $PointLight2D
 
 
@@ -17,7 +17,6 @@ func _process(_delta):
 		shape.monitorable = true
 		coin.visible = true
 		sparkles.visible = false
-		light_occluder_2d.visible = true
 		point_light_2d.visible = false
 		
 	if state == 1 and not coin.visible == false:
@@ -25,7 +24,6 @@ func _process(_delta):
 		sparkles.visible = true
 		sparkles.play(&"animation")
 		coin.visible = false
-		light_occluder_2d.visible = false
 		point_light_2d.visible = true
 		state = 2
 		
@@ -33,7 +31,6 @@ func _process(_delta):
 		sparkles.frame = 0
 		sparkles.stop()
 		sparkles.visible = false
-		light_occluder_2d.visible = false
 		point_light_2d.visible = false
 		shape.monitorable = false
 		timer.start()

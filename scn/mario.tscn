@@ -348,7 +348,7 @@ physics_interpolation_mode = 2
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_nj6jt")
-animation = &"dive_sliding"
+animation = &"dive_flipped"
 autoplay = "idle"
 
 [node name="damagebox" type="Area2D" parent="."]
@@ -365,12 +365,15 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_3hpo3")
 
 [node name="collision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_8a0ke")
 
 [node name="camera" type="Camera2D" parent="."]
 ignore_rotation = false
+drag_left_margin = 0.05
+drag_top_margin = 0.08
+drag_right_margin = 0.05
+drag_bottom_margin = 0.08
 editor_draw_screen = false
 
 [node name="tmr" type="Node" parent="."]
@@ -380,7 +383,7 @@ wait_time = 0.11
 one_shot = true
 
 [node name="jumpqueue" type="Timer" parent="tmr"]
-wait_time = 0.1
+wait_time = 0.11
 one_shot = true
 
 [node name="wallcoyotetime" type="Timer" parent="tmr"]
@@ -420,6 +423,7 @@ volume_db = -10.0
 stream = ExtResource("8_ehqb8")
 
 [node name="temp" type="RichTextLabel" parent="."]
+visible = false
 texture_filter = 1
 offset_left = -40.0
 offset_top = -40.0

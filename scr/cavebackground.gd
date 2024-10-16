@@ -10,5 +10,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	block.position = (mario.camera.offset + mario.position) / 6
+func _process(_delta: float) -> void:
+	position = (mario.camera.offset + mario.position) / 6

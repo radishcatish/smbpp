@@ -140,9 +140,15 @@ func _process(delta):
 				damage_box.monitoring = false
 				sprite.play(&"dive_sliding")
 				sprite.rotation = floor_angle
+				velocity.x *= 0.95
 			else:
-				sprite.rotation = velocity.angle()
-
+				sprite.rotation = velocity.angle() 
+				
+			if directionnotzero == Input.get_axis("left", "right") * -1:
+				velocity.x /= 1.05
+			if directionnotzero == Input.get_axis("left", "right"):
+				velocity.x += 0.01
+			velocity.x *= 0.99
 			
 			
 			
@@ -174,13 +180,14 @@ func _process(delta):
 			) 
 	else:
 		camera.offset = Vector2(
-			lerp(camera.offset.x, get_real_velocity().x / 16.0, 8.0 * delta),
-			lerp(camera.offset.y, -24.0 + get_real_velocity().x / 24.0, 10.0 * delta)
+			lerp(camera.offset.x, get_real_velocity().x / 16.0, 6.0 * delta),
+			lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + get_real_velocity().x / 24.0, 10.0 * delta)
 			) 
-
-
-func _physics_process(_delta):
 	
+
+	
+func _physics_process(_delta):
+	print(tmr_jumpqueue.time_left)
 	if abs(velocity.x) < 30 and not direction:
 		velocity.x = 0
 	
@@ -246,8 +253,7 @@ func _physics_process(_delta):
 				velocity.x += get_floor_normal().x * 10
 			if abs(floor_angle) > .79:
 				velocity.x += get_floor_normal().x * 30
-			if state == PlayerState.DIVE:
-				velocity.x *= 0.95
+
 			tmr_wallcoyotetime.stop()
 			last_walljump_direction = 0
 			can_jump = true
@@ -263,7 +269,7 @@ func _physics_process(_delta):
 						state = PlayerState.SKID
 						velocity.x *= 0.998
 		
-		
+	
 		if (Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped()) and can_jump: 
 			jump()
 		if not is_on_floor(): midair()
@@ -298,6 +304,7 @@ func jump():
 	sprite.scale.y = 1.5
 	snd_jump.play()
 	snd_jump.pitch_scale = 1 + clamp(abs(velocity.x) / 1000, 0.0, 0.200)
+	tmr_jumpqueue.stop()
 
 func midair():
 	y_inertia = velocity.y
@@ -339,25 +346,12 @@ func walljumpcode():
 
 	var walljumpangle =  -int(Input.is_action_pressed("up"))
 	if !pause or tmr_stuntime.is_stopped():
-		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1) and direction != 0:
+		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1):
 
 			state = PlayerState.WALLSLIDE
-		
-			if Input.is_action_just_pressed("X"):
-				snd_kick.play()
-				snd_jump.play()
-				state = PlayerState.DIVE
-				tmr_jumpqueue.stop()
-				if get_wall_normal().x > 0 and not last_walljump_direction == 1:
-					last_walljump_direction = 1
-					velocity.x = RUN_SPEED * 2
-				if get_wall_normal().x < 0 and not last_walljump_direction == -1:
-					last_walljump_direction = -1
-					velocity.x = -RUN_SPEED * 2
 			
-		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerState.WALLSLIDE:
-			if not tmr_jumpqueue.is_stopped():
-				if Input.is_action_just_pressed("Z"):
+		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerState.WALLSLIDE :
+				if Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped():
 					did_midair_action = false
 					snd_kick.play()
 					state = PlayerState.JUMP
@@ -393,10 +387,10 @@ func dive():
 	if did_midair_action == false:
 		if Input.is_action_pressed("up"):
 			velocity.y = JUMP_HEIGHT * 1.3
-			velocity.x = 150 * direction
+			velocity.x = 100 * direction
 		else:
 			velocity.y = JUMP_HEIGHT / 1.5
-			velocity.x = 300 * direction
+			velocity.x += 120 * direction
 			
 		state = PlayerState.DIVE
 		did_midair_action = true

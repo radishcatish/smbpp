@@ -17,8 +17,7 @@ func _ready() -> void:
 	if isInPipe:
 		position.y += 14
 		$stem/hurtbox.position.y = 2
-	openoccluder.visible = false
-	closedocculder.visible = true
+
 func _physics_process(_delta: float) -> void:
 	angle_to_mario = 0
 	
@@ -37,9 +36,3 @@ func _physics_process(_delta: float) -> void:
 		animationposition += (0.05 + aggression / 7.0)
 		stem.position.y = (sin(animationposition) * 16)
 	
-
-
-
-func _on_mouth_frame_changed() -> void:
-	openoccluder.visible = !openoccluder.visible
-	closedocculder.visible = !closedocculder.visible

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6b0rq2byybtt"]
+[gd_scene load_steps=13 format=3 uid="uid://6b0rq2byybtt"]
 
 [ext_resource type="Script" path="res://scr/coin.gd" id="1_7i5vq"]
 [ext_resource type="Texture2D" uid="uid://b0302qluavvya" path="res://spr/object/coin.png" id="1_pajl6"]
@@ -68,10 +68,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pewqv"]
 size = Vector2(12, 16)
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ymbq6"]
-cull_mode = 1
-polygon = PackedVector2Array(-3, -7, -4, -6, -5, -4, -5, 4, -4, 6, -3, 7, 3, 7, 4, 6, 5, 4, 5, -4, 4, -6, 3, -7)
-
 [node name="Coin" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_7i5vq")
@@ -92,10 +88,8 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="shape"]
 shape = SubResource("RectangleShape2D_pewqv")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-occluder = SubResource("OccluderPolygon2D_ymbq6")
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(1, 1, 1, 0.34902)
 texture = ExtResource("3_nsvdl")
 texture_scale = 0.15
