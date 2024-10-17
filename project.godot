@@ -35,6 +35,10 @@ window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[gui]
+
+theme/lcd_subpixel_layout=0
+
 [input]
 
 ui_accept={

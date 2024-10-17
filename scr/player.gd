@@ -33,7 +33,7 @@ class_name player
 #Variables
 
 var pause := false
-var direction = 1 
+@export var direction = 1 
 var friction := .99
 var can_jump := false
 var health := 3
@@ -52,32 +52,42 @@ var directionnotzero = 1
 var last_pos := Vector2.ZERO
 var positional_velocity := Vector2.ZERO
 var did_midair_action: bool = true
-
+@export var locked: bool = false
 
 enum PlayerState {NONE, IDLE, WALK, JUMP, FALL, SKID, HURT, WALLSLIDE, CROUCH, DIVE, KICK}
 #var cock: PlayerState
-var state := PlayerState.NONE#:
+@export var state := PlayerState.NONE#
 	#get:
 		#return cock
 	#set(value):
 		#if cock == PlayerState.KICK:
 			#breakpoint # this will break when it changes from kick to anything else
 		#cock = value
-
+func _ready() -> void:
+	
+	if locked:
+		state = PlayerState.NONE
+		sprite.play(&"invisible")
+		
+	
 const JUMP_HEIGHT: float = -250
 const RUN_SPEED := 160
 const ACCEL := 8.0
 
 func _process(delta):
+
 	sprite.skew = (velocity.x / 720) * .9
 	
-	$temp.text = "\n [center]" + PlayerState.find_key(state) + "[/center]"
+	$temp.text = &"\n [center]" + PlayerState.find_key(state) + &"[/center]"
 
 	if direction == 1: sprite.flip_h = false
 	if direction == -1: sprite.flip_h = true
 
 	match state:
+		PlayerState.NONE:
+			sprite.play(&"invisible")
 
+			
 		PlayerState.IDLE:
 			sprite.play(&"idle")
 			damage_box.monitoring = false
@@ -144,9 +154,9 @@ func _process(delta):
 			else:
 				sprite.rotation = velocity.angle() 
 				
-			if directionnotzero == Input.get_axis("left", "right") * -1:
+			if directionnotzero == Input.get_axis(&"left", &"right") * -1:
 				velocity.x /= 1.05
-			if directionnotzero == Input.get_axis("left", "right"):
+			if directionnotzero == Input.get_axis(&"left", &"right"):
 				velocity.x += 0.01
 			velocity.x *= 0.99
 			
@@ -178,7 +188,7 @@ func _process(delta):
 
 	
 func _physics_process(_delta):
-	print(tmr_jumpqueue.time_left)
+
 	if abs(velocity.x) < 30 and not direction:
 		velocity.x = 0
 	
@@ -195,7 +205,7 @@ func _physics_process(_delta):
 	floor_snap_length = 8 + positional_velocity.length()
 	
 	if not state in [PlayerState.HURT, PlayerState.DIVE]:
-		direction = Input.get_axis("left", "right")
+		direction = Input.get_axis(&"left", &"right")
 
 		
 	if direction != 0:
@@ -208,7 +218,7 @@ func _physics_process(_delta):
 	
 		
 	if tmr_stuntime.is_stopped():
-		if Input.is_action_just_pressed("X"): attackhandler()
+		if Input.is_action_just_pressed(&"X"): attackhandler()
 #region single frame code filler
 
 		if not is_on_wall_only() and last_not_on_wall_only == true:
@@ -235,9 +245,10 @@ func _physics_process(_delta):
 			just_now_on_floor = true
 			last_on_floor = is_on_floor()
 #endregion
-				
+		camera_interested_in_pos = Vector2(0,0)
 		for area in hitbox.get_overlapping_areas():
 			interactions(area)
+			
 			
 		if is_on_floor():
 			if direction:
@@ -261,9 +272,9 @@ func _physics_process(_delta):
 						velocity.x *= 0.998
 		
 	
-		if (Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped()) and can_jump: 
+		if (Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped()) and can_jump: 
 			jump()
-		if not is_on_floor(): midair()
+		if not is_on_floor() and !locked: midair()
 	else:
 		velocity.y += 14
 		velocity.x *= 0.9
@@ -279,7 +290,8 @@ func _physics_process(_delta):
 
 	
 	velocity.y = clamp(velocity.y, -600, 500)
-	move_and_slide()
+	if !locked:
+		move_and_slide()
 
 func jump():
 	can_jump = false
@@ -307,17 +319,17 @@ func midair():
 			state = PlayerState.JUMP
 		else:
 			state = PlayerState.FALL
-		velocity.y += 14 - (int(Input.is_action_pressed("Z")) * 3) + sign(velocity.y) 
+		velocity.y += 14 - (int(Input.is_action_pressed(&"Z")) * 3) + sign(velocity.y) 
 	else:
 		velocity.y += 14
-	if (Input.is_action_just_released("Z") or not Input.is_action_pressed("Z")) and velocity.y < -100:
+	if (Input.is_action_just_released(&"Z") or not Input.is_action_pressed(&"Z")) and velocity.y < -100:
 		velocity.y = -100
 		
-	if Input.is_action_just_pressed("Z"):
+	if Input.is_action_just_pressed(&"Z"):
 		tmr_jumpqueue.start()
 	
 	if state == PlayerState.DIVE:
-		velocity.x += Input.get_axis("left", "right") * 4
+		velocity.x += Input.get_axis(&"left", &"right") * 4
 		
 	walljumpcode() 
 	
@@ -335,14 +347,14 @@ func midair():
 
 func walljumpcode():
 
-	var walljumpangle =  -int(Input.is_action_pressed("up"))
+	var walljumpangle =  -int(Input.is_action_pressed(&"up"))
 	if !pause or tmr_stuntime.is_stopped():
 		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1):
-
+			sprite.rotation = 0
 			state = PlayerState.WALLSLIDE
 			
 		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerState.WALLSLIDE :
-				if Input.is_action_just_pressed("Z") or not tmr_jumpqueue.is_stopped():
+				if Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped():
 					did_midair_action = false
 					snd_kick.play()
 					state = PlayerState.JUMP
@@ -376,7 +388,7 @@ func kick():
 func dive():
 	
 	if did_midair_action == false:
-		if Input.is_action_pressed("up"):
+		if Input.is_action_pressed(&"up"):
 			velocity.y = JUMP_HEIGHT * 1.3
 			velocity.x = 100 * direction
 		else:
@@ -386,7 +398,9 @@ func dive():
 		state = PlayerState.DIVE
 		did_midair_action = true
 		snd_dive.play()
+		
 
+var camera_interested_in_pos: Vector2
 func interactions(area):
 	if area.get_parent() is Coin and area.get_parent().state == 0:
 		area.get_parent().state = 1
@@ -402,7 +416,9 @@ func interactions(area):
 			coins_until_hp = 0
 			
 
-		
+	if area.name.containsn("cam"):
+		camera_interested_in_pos = area.global_position
+
 		
 		
 	if area is Hurtbox and ((not state == PlayerState.HURT) and tmr_iframes.is_stopped()):

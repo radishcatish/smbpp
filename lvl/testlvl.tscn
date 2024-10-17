@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://b1784fi0dusia"]
+[gd_scene load_steps=8 format=4 uid="uid://c0qj8v8x7s1da"]
 
 [ext_resource type="PackedScene" uid="uid://bgospolx8ma8j" path="res://tilesets/basetilemap.tscn" id="1_vo666"]
 [ext_resource type="PackedScene" uid="uid://cnybnjrewsp1x" path="res://scn/mario.tscn" id="2_0aabg"]
@@ -7,30 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dqrsidi6fdkim" path="res://tilesets/backgroundobjects.tscn" id="5_ohvyn"]
 [ext_resource type="PackedScene" uid="uid://cau5ns4b45pg2" path="res://scn/piranaplant.tscn" id="6_hpve7"]
 [ext_resource type="PackedScene" uid="uid://6b0rq2byybtt" path="res://scn/coin.tscn" id="7_s1x8e"]
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_838s6"]
-polygon = PackedVector2Array(-190, 322, -1150, 1280, -1822, 1282, -1822, 1518, -358, 1518, 2811, 568, 2814, 418, 2400, 418, 2238, 336, 2238, 306, 2194, 306, 2194, 337, 2130, 401, 2098, 417, 2098, 418, 2094, 417, 2094, 371, 2066, 371, 2065, 400, 2065, 402, 1934, 402, 1934, 355, 1906, 355, 1906, 402, 1789, 402, 1789, 354, 1762, 354, 1762, 402, 1743, 402, 1661, 320, 1633, 306, 1616, 306, 1568, 354, 1487, 354, 1454, 320, 1454, 304, 1424, 274, 1392, 274, 1346, 321, 1346, 353, 1314, 385, 1280, 386, 1249, 402, 1103, 402, 1072, 386, 1023, 338, 1009, 333, 992, 336, 990, 336, 990, 322, 962, 322, 962, 344, 960, 344, 960, 346, 929, 354, 833, 402, 670, 402, 670, 290, 642, 290, 642, 402, 528, 402, 511, 398, 496, 394, 480, 386, 412, 320, 414, 320, 414, 306, 354, 306, 354, 320, 354, 322, 256, 370, 192, 370, 129, 402, 46, 402, 46, 322, 33, 322, 26, 353, 17, 369, 2, 384, -61, 401, -80, 402, -144, 386, -160, 371, -169, 353, -177, 322)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6fmwc"]
-polygon = PackedVector2Array(2130, 338, 2130, 350, 2142, 350, 2142, 338)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xy6le"]
-polygon = PackedVector2Array(2114, 354, 2126, 354, 2126, 358, 2114, 358)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_r1x8s"]
-polygon = PackedVector2Array(2127, 337, 2127, 349, 2155, 349, 2155, 337)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_quoga"]
-polygon = PackedVector2Array(2127, 337, 2127, 349, 2171, 349, 2171, 337)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8yro2"]
-polygon = PackedVector2Array(2143, 313, 2143, 357, 2171, 357, 2171, 313)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_f5025"]
-polygon = PackedVector2Array(724, 370, 722, 372, 722, 374, 813, 374, 813, 371, 812, 370)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_40cru"]
-polygon = PackedVector2Array(1282, 354, 1310, 354, 1310, 358, 1282, 358)
 
 [node name="Node" type="Node"]
 metadata/_edit_vertical_guides_ = [73.0]
@@ -49,69 +25,6 @@ z_index = -3
 tile_map_data = PackedByteArray("AAAMABYAAAAMAAMAAAANABYAAAANAAMAAAAOABYAAAANAAMAAAAiABgAAAAMAAMAAAAjABgAAAANAAMAAAAkABgAAAANAAMAAABKABgAAAAMAAMAAABLABgAAAANAAMAAABMABgAAAANAAMAAAB6ABgAAAAMAAMAAAB7ABgAAAANAAMAAAB8ABgAAAANAAMAAAB9ABgAAAANAAMAAAB+ABgAAAANAAMAAAB/ABgAAAAOAAMAAABxABgAAAAMAAMAAAByABgAAAAOAAMAAABdABUAAAAOAAMAAABcABUAAAAMAAMAAABNABgAAAAOAAMAAAAlABgAAAAOAAMAAAAPABYAAAAOAAMAAAABABgAAAATAAQAAAACABcAAAATAAQAAAACABgAAAAUAAQAAAADABcAAAAVAAMAAAADABgAAAAVAAQAAAAEABcAAAAXAAQAAAAEABgAAAAWAAQAAAAFABgAAAAXAAQAAAADABYAAAAVAAIAAAArABgAAAATAAQAAAAsABcAAAATAAQAAAAsABgAAAAUAAQAAAAtABYAAAAVAAIAAAAtABcAAAAVAAMAAAAtABgAAAAVAAQAAAAuABcAAAAXAAQAAAAuABgAAAAWAAQAAAAvABgAAAAXAAQAAABFABgAAAATAAQAAABGABcAAAATAAQAAABGABgAAAAUAAQAAABHABYAAAAVAAIAAABHABcAAAAVAAMAAABHABgAAAAVAAQAAABIABcAAAAXAAQAAABIABgAAAAWAAQAAABJABgAAAAXAAQAAACWABkAAAATAAQAAACXABgAAAATAAQAAACXABkAAAAUAAQAAACYABcAAAAVAAIAAACYABgAAAAVAAMAAACYABkAAAAVAAQAAACZABgAAAAXAAQAAACZABkAAAAWAAQAAACaABkAAAAXAAQAAABXABAAAAAMAAMAAABYABAAAAAOAAMAAAA=")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_kvkny")]
-
-[node name="occluders" type="Node" parent="."]
-
-[node name="ground" type="LightOccluder2D" parent="occluders"]
-occluder = SubResource("OccluderPolygon2D_838s6")
-
-[node name="singleblock" type="LightOccluder2D" parent="occluders"]
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock2" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-224, -48)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock3" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-272, -32)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock4" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-320, -16)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock5" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-592, -64)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock6" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-640, -64)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="singleblock7" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-1552, 0)
-occluder = SubResource("OccluderPolygon2D_6fmwc")
-
-[node name="halfblock" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-1552, 0)
-occluder = SubResource("OccluderPolygon2D_xy6le")
-
-[node name="doubleblock" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-941, 33)
-occluder = SubResource("OccluderPolygon2D_r1x8s")
-
-[node name="doubleblock2" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-1069, -47)
-occluder = SubResource("OccluderPolygon2D_r1x8s")
-
-[node name="tripleblock" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-1037, 1)
-occluder = SubResource("OccluderPolygon2D_quoga")
-
-[node name="tripleblock2" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-1005, -63)
-occluder = SubResource("OccluderPolygon2D_quoga")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="occluders"]
-position = Vector2(-957, -39)
-occluder = SubResource("OccluderPolygon2D_8yro2")
-
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="occluders"]
-position = Vector2(1, -16)
-occluder = SubResource("OccluderPolygon2D_f5025")
-
-[node name="LightOccluder2D4" type="LightOccluder2D" parent="occluders"]
-occluder = SubResource("OccluderPolygon2D_40cru")
 
 [node name="enemies" type="Node" parent="."]
 

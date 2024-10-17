@@ -6,8 +6,7 @@ const DAMAGE: int = 1
 @onready var stem: Sprite2D = $stem
 @onready var mouth: AnimatedSprite2D = $stem/mouth
 @onready var mariodetectionradius: Area2D = $mariodetectionradius
-@onready var openoccluder: LightOccluder2D = $stem/mouth/openoccluder
-@onready var closedocculder: LightOccluder2D = $stem/mouth/closedocculder
+
 var angle_to_mario: float = 0
 var mario_angle_lerped: float = 0
 var animationposition := 0.0

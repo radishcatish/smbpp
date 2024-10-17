@@ -12,6 +12,3 @@ scale = Vector2(5, 5)
 texture = ExtResource("1_wuali")
 region_enabled = true
 region_rect = Rect2(37, 4, 4, 4)
-
-[node name="timer" type="Timer" parent="."]
-one_shot = true

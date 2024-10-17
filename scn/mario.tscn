@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cnybnjrewsp1x"]
+[gd_scene load_steps=35 format=3 uid="uid://cnybnjrewsp1x"]
 
 [ext_resource type="Script" path="res://scr/player.gd" id="1_8rros"]
 [ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/misc/Super Mario Bros. NES.ttf" id="2_616v5"]
@@ -42,6 +42,10 @@ region = Rect2(256, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s4yn8"]
 atlas = ExtResource("3_8uv0f")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji48d"]
+atlas = ExtResource("3_8uv0f")
+region = Rect2(6, 3, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hct5m"]
 atlas = ExtResource("3_8uv0f")
@@ -154,6 +158,14 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 0.01,
+"texture": SubResource("AtlasTexture_ji48d")
+}],
+"loop": false,
+"name": &"invisible",
+"speed": 0.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hct5m")
 }],
@@ -180,8 +192,11 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n4vaf")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_n4vaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r57o2")
 }],
 "loop": true,
 "name": &"kick",

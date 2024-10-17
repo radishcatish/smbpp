@@ -135,10 +135,10 @@ animations = [{
 
 [node name="hud" type="CanvasLayer"]
 layer = 128
-follow_viewport_scale = 0.001
 script = ExtResource("1_paryr")
 
 [node name="Static" type="RichTextLabel" parent="."]
+z_index = 100
 texture_filter = 1
 offset_left = -8.0
 offset_top = 8.0
@@ -155,6 +155,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="CoinsCounter" type="RichTextLabel" parent="."]
+z_index = 100
 texture_filter = 1
 offset_left = 56.0
 offset_top = 16.0
@@ -171,6 +172,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ScoreCounter" type="RichTextLabel" parent="."]
+z_index = 100
 texture_filter = 1
 offset_left = 128.0
 offset_top = 16.0
@@ -187,6 +189,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="hpcounter" type="Control" parent="."]
+z_index = 100
 layout_mode = 3
 anchors_preset = 0
 offset_left = 32.0
@@ -219,4 +222,5 @@ texture = ExtResource("5_4fmnt")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visibility_layer = 2
+z_index = 100
 texture_filter = 1

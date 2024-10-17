@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://x0oofrtiob5a"
-path="res://.godot/imported/mariospritesheet.png-2edf8cbb16fec027e2eeea3fb6f11c40.ctex"
+path="res://.godot/imported/thevoid.png-1e1ad9bf22d4f53a2ed12dbebc91c5ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spr/mario/mariospritesheet.png"
-dest_files=["res://.godot/imported/mariospritesheet.png-2edf8cbb16fec027e2eeea3fb6f11c40.ctex"]
+source_file="res://spr/mario/thevoid.png"
+dest_files=["res://.godot/imported/thevoid.png-1e1ad9bf22d4f53a2ed12dbebc91c5ad.ctex"]
 
 [params]
 

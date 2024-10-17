@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0vb7nvp03lqv"]
+
+[ext_resource type="PackedScene" uid="uid://cnybnjrewsp1x" path="res://scn/mario.tscn" id="1_es3so"]
+[ext_resource type="PackedScene" uid="uid://bgospolx8ma8j" path="res://tilesets/basetilemap.tscn" id="2_5kaui"]
+[ext_resource type="PackedScene" uid="uid://cbli7eokx8ll8" path="res://scn/fade.tscn" id="3_q324j"]
+
+[node name="level" type="Node"]
+
+[node name="Mario" parent="." instance=ExtResource("1_es3so")]
+position = Vector2(0, -1024)
+state = 9
+
+[node name="fade" parent="Mario" instance=ExtResource("3_q324j")]
+
+[node name="basetilemap" parent="." instance=ExtResource("2_5kaui")]
+tile_map_data = PackedByteArray(0, 0, 254, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
