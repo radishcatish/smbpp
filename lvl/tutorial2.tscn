@@ -6,11 +6,12 @@
 
 [node name="level" type="Node"]
 
-[node name="Mario" parent="." instance=ExtResource("1_es3so")]
+[node name="fade" parent="." instance=ExtResource("3_q324j")]
 position = Vector2(0, -1024)
+
+[node name="Mario" parent="." instance=ExtResource("1_es3so")]
 state = 9
 
-[node name="fade" parent="Mario" instance=ExtResource("3_q324j")]
-
 [node name="basetilemap" parent="." instance=ExtResource("2_5kaui")]
+position = Vector2(0, 1024)
 tile_map_data = PackedByteArray(0, 0, 254, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
