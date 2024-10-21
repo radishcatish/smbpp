@@ -53,6 +53,7 @@ var last_pos := Vector2.ZERO
 var positional_velocity := Vector2.ZERO
 var did_midair_action: bool = true
 @export var locked: bool = false
+var is_slippery: bool = false
 
 enum PlayerState {NONE, IDLE, WALK, JUMP, FALL, SKID, HURT, WALLSLIDE, CROUCH, DIVE, KICK}
 #var cock: PlayerState
@@ -188,15 +189,34 @@ func _process(delta):
 
 	
 func _physics_process(_delta):
+#region single frame code filler
+	if not is_on_wall_only() and last_not_on_wall_only == true:
+		last_not_on_wall_only = is_on_wall_only()
+		just_now_not_on_wall_only = true
+		
+		tmr_wallcoyotetime.stop()
+		tmr_wallcoyotetime.start()
+	else:
+		just_now_not_on_wall_only = false
+		last_not_on_wall_only = is_on_wall_only()
+	
+	if not is_on_floor() and last_not_on_floor == true:
+		last_not_on_floor = is_on_floor()
+		just_now_not_on_floor = true
+	else:
+		just_now_not_on_floor = false
+		last_not_on_floor = is_on_floor()
+	
+	if is_on_floor() and last_on_floor == false:
+		last_on_floor = is_on_floor()
+		just_now_on_floor = false
+	else:
+		just_now_on_floor = true
+		last_on_floor = is_on_floor()
+#endregion
 
 	if abs(velocity.x) < 30 and not direction:
 		velocity.x = 0
-	
-	if is_on_floor():
-		floor_angle =  get_floor_angle(up_direction) * sign(get_floor_normal().x)
-	else:
-		floor_angle = 0
-
 	
 	if last_pos != position:
 		positional_velocity = last_pos - position
@@ -211,7 +231,7 @@ func _physics_process(_delta):
 	if direction != 0:
 		directionnotzero = direction
 		
-	if direction == 0: 
+	if direction == 0 and not is_slippery: 
 		friction = .8
 	else: 
 		friction = .99
@@ -219,46 +239,26 @@ func _physics_process(_delta):
 		
 	if tmr_stuntime.is_stopped():
 		if Input.is_action_just_pressed(&"X"): attackhandler()
-#region single frame code filler
 
-		if not is_on_wall_only() and last_not_on_wall_only == true:
-			last_not_on_wall_only = is_on_wall_only()
-			just_now_not_on_wall_only = true
-			
-			tmr_wallcoyotetime.stop()
-			tmr_wallcoyotetime.start()
-		else:
-			just_now_not_on_wall_only = false
-			last_not_on_wall_only = is_on_wall_only()
-		
-		if not is_on_floor() and last_not_on_floor == true:
-			last_not_on_floor = is_on_floor()
-			just_now_not_on_floor = true
-		else:
-			just_now_not_on_floor = false
-			last_not_on_floor = is_on_floor()
-		
-		if is_on_floor() and last_on_floor == false:
-			last_on_floor = is_on_floor()
-			just_now_on_floor = false
-		else:
-			just_now_on_floor = true
-			last_on_floor = is_on_floor()
-#endregion
 		camera_interested_in_pos = Vector2(0,0)
 		for area in hitbox.get_overlapping_areas():
 			interactions(area)
 			
 			
 		if is_on_floor():
-			if direction:
-				velocity.x += get_floor_normal().x * 10
-			if abs(floor_angle) > .79:
-				velocity.x += get_floor_normal().x * 30
+
 
 			tmr_wallcoyotetime.stop()
 			last_walljump_direction = 0
 			can_jump = true
+			floor_angle =  get_floor_angle(up_direction) * sign(get_floor_normal().x)
+			
+			if direction:
+				velocity.x += get_floor_normal().x * 10
+			if abs(floor_angle) > .79 or is_slippery:
+				
+				velocity.x += get_floor_normal().x * 30
+				
 			if not state in [PlayerState.KICK, PlayerState.DIVE]:
 				did_midair_action = false
 				
@@ -312,6 +312,7 @@ func jump():
 func midair():
 	y_inertia = velocity.y
 	friction = .99
+	floor_angle = 0
 	
 	if just_now_not_on_floor: tmr_coyotetime.start()
 	if not state in [PlayerState.KICK, PlayerState.DIVE]:
@@ -322,6 +323,7 @@ func midair():
 		velocity.y += 14 - (int(Input.is_action_pressed(&"Z")) * 3) + sign(velocity.y) 
 	else:
 		velocity.y += 14
+		
 	if (Input.is_action_just_released(&"Z") or not Input.is_action_pressed(&"Z")) and velocity.y < -100:
 		velocity.y = -100
 		

@@ -248,6 +248,9 @@ floor_constant_speed = true
 floor_max_angle = 1.39626
 floor_snap_length = 2.0
 script = ExtResource("1_8rros")
+direction = null
+locked = null
+state = null
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 physics_interpolation_mode = 2
