@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbli7eokx8ll8"]
 
-[ext_resource type="Script" path="res://fade.gd" id="1_kp4sf"]
+[ext_resource type="Script" path="res://scr/fade.gd" id="1_kp4sf"]
 
 [sub_resource type="Gradient" id="Gradient_b016o"]
 offsets = PackedFloat32Array(0)

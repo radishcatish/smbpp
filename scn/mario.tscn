@@ -189,14 +189,11 @@ animations = [{
 "duration": 0.9,
 "texture": SubResource("AtlasTexture_dwlnu")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n4vaf")
-}, {
-"duration": 1.2,
+"duration": 1.4,
 "texture": SubResource("AtlasTexture_n4vaf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r57o2")
+"texture": SubResource("AtlasTexture_n4vaf")
 }],
 "loop": true,
 "name": &"kick",
@@ -248,9 +245,6 @@ floor_constant_speed = true
 floor_max_angle = 1.39626
 floor_snap_length = 2.0
 script = ExtResource("1_8rros")
-direction = null
-locked = null
-state = null
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 physics_interpolation_mode = 2
@@ -324,7 +318,6 @@ volume_db = -10.0
 stream = ExtResource("8_ehqb8")
 
 [node name="temp" type="RichTextLabel" parent="."]
-visible = false
 texture_filter = 1
 offset_left = -40.0
 offset_top = -40.0

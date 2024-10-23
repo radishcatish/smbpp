@@ -3,8 +3,9 @@ extends AnimatedSprite2D
 @onready var polygon_2d: Polygon2D = $"../level/basetilemap/Polygon2D"
 
 func _physics_process(_delta):
-
+	mario.locked = true
 	if frame > 1:
 		mario.locked = false
 		queue_free()
 		mario.jump()
+		

@@ -65,7 +65,10 @@ const ACCEL := 10.0
 const FRICTION := .95
 
 func _process(delta):
-
+	if is_instance_valid(get_tree().get_first_node_in_group("Player")):
+		mario = get_tree().get_first_node_in_group("Player")
+	else:
+		return
 	sprite.skew = (velocity.x / 720) * .9
 	
 
@@ -124,6 +127,8 @@ func _process(delta):
 
 	
 func _physics_process(_delta):
+	if not mario:
+		return
 	mario_pos_diff = position - mario.position
 	if abs(velocity.x) < 30 and not direction:
 		velocity.x = 0
@@ -213,7 +218,7 @@ func jump():
 	position.y -= 3
 	state = PlayerState.JUMP
 	sprite.scale.y = 1.5
-	snd_jump.play()
+	#snd_jump.play()
 	snd_jump.pitch_scale = 1 + clamp(abs(velocity.x) / 1000, 0.0, 0.200)
 
 func midair():

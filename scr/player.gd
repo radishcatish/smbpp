@@ -33,11 +33,11 @@ class_name player
 #Variables
 
 var pause := false
-@export var direction = 1 
+@export var direction = 0
 var friction := .99
 var can_jump := false
 var health := 3
-var last_not_on_floor := false
+
 var just_now_not_on_floor := false
 var last_on_floor := false
 var just_now_on_floor := false
@@ -53,9 +53,10 @@ var last_pos := Vector2.ZERO
 var positional_velocity := Vector2.ZERO
 var did_midair_action: bool = true
 @export var locked: bool = false
+@export var cant_move: bool = false
 var is_slippery: bool = false
 
-enum PlayerState {NONE, IDLE, WALK, JUMP, FALL, SKID, HURT, WALLSLIDE, CROUCH, DIVE, KICK}
+enum PlayerState {NONE, IDLE, WALK, MIDAIR, SKID, HURT, WALLSLIDE, CROUCH, DIVE, KICK}
 #var cock: PlayerState
 @export var state := PlayerState.NONE#
 	#get:
@@ -69,14 +70,18 @@ func _ready() -> void:
 	if locked:
 		state = PlayerState.NONE
 		sprite.play(&"invisible")
-		
+		for area in hitbox.get_overlapping_areas():
+			interactions(area)
 	
 const JUMP_HEIGHT: float = -250
 const RUN_SPEED := 160
 const ACCEL := 8.0
 
 func _process(delta):
-
+	if locked:
+		state = PlayerState.NONE
+		sprite.play(&"invisible")
+		return
 	sprite.skew = (velocity.x / 720) * .9
 	
 	$temp.text = &"\n [center]" + PlayerState.find_key(state) + &"[/center]"
@@ -100,17 +105,17 @@ func _process(delta):
 			damage_box.monitoring = false
 			sprite.rotation = floor_angle / 2
 			
-		PlayerState.JUMP:
+		PlayerState.MIDAIR:
 			sprite.play(&"jump")
+			if velocity.y > 0:
+				sprite.play(&"fall")
+				damage_box.monitoring = true
+				sprite.rotation = move_toward(sprite.rotation, 0, delta)
+				if velocity.y > -JUMP_HEIGHT:
+					sprite.play(&"fastfall")
 			damage_box.monitoring = false
-		
-		PlayerState.FALL:
-			sprite.play(&"fall")
-			damage_box.monitoring = true
-			sprite.rotation = move_toward(sprite.rotation, 0, delta)
-			if velocity.y > -JUMP_HEIGHT:
-				sprite.play(&"fastfall")
-				
+
+
 		PlayerState.HURT:
 			sprite.play(&"hurt")
 			damage_box.monitoring = false
@@ -134,7 +139,7 @@ func _process(delta):
 			sprite.speed_scale = 2
 			sprite.play(&"kick")
 			if sprite.frame == 6:
-				state = PlayerState.FALL
+				state = PlayerState.MIDAIR
 			damage_box.scale = Vector2(8, 16)
 			damage_box.position = Vector2(6 * directionnotzero, 0)
 			damage_box.monitoring = sprite.frame < 5
@@ -189,31 +194,10 @@ func _process(delta):
 
 	
 func _physics_process(_delta):
-#region single frame code filler
-	if not is_on_wall_only() and last_not_on_wall_only == true:
-		last_not_on_wall_only = is_on_wall_only()
-		just_now_not_on_wall_only = true
-		
-		tmr_wallcoyotetime.stop()
-		tmr_wallcoyotetime.start()
-	else:
-		just_now_not_on_wall_only = false
-		last_not_on_wall_only = is_on_wall_only()
-	
-	if not is_on_floor() and last_not_on_floor == true:
-		last_not_on_floor = is_on_floor()
-		just_now_not_on_floor = true
-	else:
-		just_now_not_on_floor = false
-		last_not_on_floor = is_on_floor()
-	
-	if is_on_floor() and last_on_floor == false:
-		last_on_floor = is_on_floor()
-		just_now_on_floor = false
-	else:
-		just_now_on_floor = true
-		last_on_floor = is_on_floor()
-#endregion
+	if locked: return
+	just_now_not_on_floor = not is_on_floor() and last_on_floor
+	just_now_on_floor = is_on_floor() and not last_on_floor
+	last_on_floor = is_on_floor()
 
 	if abs(velocity.x) < 30 and not direction:
 		velocity.x = 0
@@ -221,10 +205,8 @@ func _physics_process(_delta):
 	if last_pos != position:
 		positional_velocity = last_pos - position
 		last_pos = position
-		
-	floor_snap_length = 8 + positional_velocity.length()
 	
-	if not state in [PlayerState.HURT, PlayerState.DIVE]:
+	if not state in [PlayerState.HURT, PlayerState.DIVE] and not cant_move:
 		direction = Input.get_axis(&"left", &"right")
 
 		
@@ -237,17 +219,18 @@ func _physics_process(_delta):
 		friction = .99
 	
 		
-	if tmr_stuntime.is_stopped():
-		if Input.is_action_just_pressed(&"X"): attackhandler()
+	if tmr_stuntime.is_stopped() or not locked:
 
+		floor_snap_length = 8 + positional_velocity.length()
 		camera_interested_in_pos = Vector2(0,0)
+		
 		for area in hitbox.get_overlapping_areas():
 			interactions(area)
 			
+		if Input.is_action_just_pressed(&"X") and not cant_move: 
+			attackhandler()
 			
 		if is_on_floor():
-
-
 			tmr_wallcoyotetime.stop()
 			last_walljump_direction = 0
 			can_jump = true
@@ -256,7 +239,6 @@ func _physics_process(_delta):
 			if direction:
 				velocity.x += get_floor_normal().x * 10
 			if abs(floor_angle) > .79 or is_slippery:
-				
 				velocity.x += get_floor_normal().x * 30
 				
 			if not state in [PlayerState.KICK, PlayerState.DIVE]:
@@ -270,11 +252,11 @@ func _physics_process(_delta):
 				if ((direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0)) and abs(velocity.x) > 45:
 						state = PlayerState.SKID
 						velocity.x *= 0.998
+		else: midair()
 		
-	
-		if (Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped()) and can_jump: 
+		if (Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped()) and can_jump and not cant_move and not state == PlayerState.KICK: 
 			jump()
-		if not is_on_floor() and !locked: midair()
+		
 	else:
 		velocity.y += 14
 		velocity.x *= 0.9
@@ -284,11 +266,8 @@ func _physics_process(_delta):
 
 	if not abs(velocity.x) > RUN_SPEED and not state == PlayerState.DIVE:
 		velocity.x = velocity.x + direction * (ACCEL)
-		
 	
 	velocity.x *= friction
-
-	
 	velocity.y = clamp(velocity.y, -600, 500)
 	if !locked:
 		move_and_slide()
@@ -303,7 +282,7 @@ func jump():
 		
 		velocity.x = 1.5 * -get_floor_normal().x * (-200 + positional_velocity.y * 30)
 	position.y -= 3
-	state = PlayerState.JUMP
+	state = PlayerState.MIDAIR
 	sprite.scale.y = 1.5
 	snd_jump.play()
 	snd_jump.pitch_scale = 1 + clamp(abs(velocity.x) / 1000, 0.0, 0.200)
@@ -313,13 +292,16 @@ func midair():
 	y_inertia = velocity.y
 	friction = .99
 	floor_angle = 0
+	just_now_not_on_wall_only = not is_on_wall_only() and last_not_on_wall_only
+	last_not_on_wall_only = is_on_wall_only()
+	if just_now_not_on_wall_only: 
+		tmr_wallcoyotetime.start()
 	
+		
 	if just_now_not_on_floor: tmr_coyotetime.start()
-	if not state in [PlayerState.KICK, PlayerState.DIVE]:
-		if velocity.y < -50:
-			state = PlayerState.JUMP
-		else:
-			state = PlayerState.FALL
+	
+	if not state in [PlayerState.KICK, PlayerState.DIVE, PlayerState.HURT]:
+		state = PlayerState.MIDAIR
 		velocity.y += 14 - (int(Input.is_action_pressed(&"Z")) * 3) + sign(velocity.y) 
 	else:
 		velocity.y += 14
@@ -333,7 +315,24 @@ func midair():
 	if state == PlayerState.DIVE:
 		velocity.x += Input.get_axis(&"left", &"right") * 4
 		
-	walljumpcode() 
+	var walljumpangle =  -int(Input.is_action_pressed(&"up"))
+	if !pause or tmr_stuntime.is_stopped():
+		if (is_on_wall_only() or not tmr_wallcoyotetime.is_stopped()) and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1):
+			if Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped():
+				did_midair_action = false
+				snd_kick.play()
+				state = PlayerState.MIDAIR
+				tmr_jumpqueue.stop()
+				sprite.scale.y = 1.35
+				velocity.y = JUMP_HEIGHT + (walljumpangle * 30)
+				tmr_wallcoyotetime.stop()
+				var bleh: int = sign(get_wall_normal().x)
+				if bleh != last_walljump_direction:
+					last_walljump_direction = bleh
+					velocity.x = bleh * RUN_SPEED - walljumpangle * 30
+
+	if is_on_wall_only():
+		state = PlayerState.WALLSLIDE
 	
 	if not is_on_ceiling() and velocity.y < 0: 
 		ceiling_hit_velocity = velocity.y 
@@ -347,30 +346,7 @@ func midair():
 		snd_jump.stop()
 		snd_bump.play()
 
-func walljumpcode():
 
-	var walljumpangle =  -int(Input.is_action_pressed(&"up"))
-	if !pause or tmr_stuntime.is_stopped():
-		if is_on_wall_only() and (get_wall_normal().x > 0 and not last_walljump_direction == 1 or get_wall_normal().x < 0 and not last_walljump_direction == -1):
-			sprite.rotation = 0
-			state = PlayerState.WALLSLIDE
-			
-		if (not tmr_wallcoyotetime.is_stopped()) or state == PlayerState.WALLSLIDE :
-				if Input.is_action_just_pressed(&"Z") or not tmr_jumpqueue.is_stopped():
-					did_midair_action = false
-					snd_kick.play()
-					state = PlayerState.JUMP
-					tmr_jumpqueue.stop()
-					sprite.scale.y = 1.35
-					velocity.y = JUMP_HEIGHT + (walljumpangle * 30)
-					
-					if get_wall_normal().x > 0 and not last_walljump_direction == 1:
-						last_walljump_direction = 1
-						velocity.x = RUN_SPEED - walljumpangle * 30
-					if get_wall_normal().x < 0 and not last_walljump_direction == -1:
-						last_walljump_direction = -1
-						velocity.x = -RUN_SPEED - walljumpangle * 30
-					tmr_wallcoyotetime.stop()
 
 func attackhandler():
 	if !direction or is_on_floor():

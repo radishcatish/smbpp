@@ -110,6 +110,7 @@ shape = SubResource("RectangleShape2D_3hpo3")
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_8a0ke")
+one_way_collision_margin = 0.0
 
 [node name="tmr" type="Node" parent="."]
 

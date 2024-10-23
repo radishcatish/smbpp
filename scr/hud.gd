@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	if marioexists == true:
 		coins_counter.text = " %06d" % coins
 		score_counter.text = " %07d" % score
-		hpcircle.play(str(mario.health)) 
+		#hpcircle.play(str(mario.health)) 
 		coinhpcount.play(str(mario.coins_until_hp))
 			
 		if healthbefore != mario.health:
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 
 		if last_pos != camera.position:
 			positional_velocity = last_pos - camera.position
-			positional_velocity *= -60
+			positional_velocity *= -60 * delta
 			last_pos = camera.position
 		if not mario.get_platform_velocity().length_squared():
 			camera.offset = Vector2(

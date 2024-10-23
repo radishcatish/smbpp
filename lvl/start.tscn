@@ -208,7 +208,6 @@ texture = ExtResource("4_ntax4")
 [node name="Mario" parent="level" instance=ExtResource("3_sav01")]
 visibility_layer = 3
 direction = -1
-locked = true
 state = 1
 
 [node name="fade" parent="level/Mario" instance=ExtResource("15_mshqd")]
