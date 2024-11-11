@@ -13,7 +13,7 @@
 metadata/_edit_vertical_guides_ = [73.0]
 
 [node name="mariopartner" parent="." instance=ExtResource("8_q2i2r")]
-position = Vector2(104, -144)
+position = Vector2(288, 904)
 
 [node name="Mario" parent="." instance=ExtResource("2_0aabg")]
 position = Vector2(368, 48)

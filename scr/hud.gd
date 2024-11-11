@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	if marioexists == true:
 		coins_counter.text = " %06d" % coins
 		score_counter.text = " %07d" % score
-		#hpcircle.play(str(mario.health)) 
+		hpcircle.play(str(mario.health)) 
 		coinhpcount.play(str(mario.coins_until_hp))
 			
 		if healthbefore != mario.health:
@@ -62,17 +62,12 @@ func _process(delta: float) -> void:
 			camera.offset = lerp(camera.offset, Vector2(0, -32.0) + (mario.global_position - mario.camera_interested_in_pos) * -0.5, 4.0 * delta)
 
 		if last_pos != camera.position:
+			
 			positional_velocity = last_pos - camera.position
-			positional_velocity *= -60 * delta
+			positional_velocity *= -4500 * delta
 			last_pos = camera.position
-		if not mario.get_platform_velocity().length_squared():
-			camera.offset = Vector2(
-				lerp(camera.offset.x, positional_velocity.x / 8.0, 8.0 * delta),
-				lerp(camera.offset.y, clamp(-32.0 + positional_velocity.y / 8.0, -24.0, 64.0), 8.0 * delta)
-				) 
-		else:
-			camera.offset = Vector2(
-				lerp(camera.offset.x,  positional_velocity.x / 16.0, 6.0 * delta),
-				lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + positional_velocity.y / 24.0, 10.0 * delta)
-				) 
-	
+
+		camera.offset = Vector2(
+			lerp(camera.offset.x,  positional_velocity.x / 16.0, 6.0 * delta),
+			lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + positional_velocity.y / 24.0, 10.0 * delta)
+			) 
