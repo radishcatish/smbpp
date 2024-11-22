@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://wqjs2lhmxwvw"]
 
 [ext_resource type="Script" path="res://scr/mariopartner.gd" id="1_q1s5i"]
-[ext_resource type="Texture2D" uid="uid://bftnbrhilvpis" path="res://spr/nsmbwiitoads.png" id="2_p0xds"]
+[ext_resource type="Texture2D" uid="uid://bftnbrhilvpis" path="res://spr/npc/nsmbwiitoads.png" id="2_p0xds"]
 [ext_resource type="AudioStream" uid="uid://cred55pffpb4c" path="res://snd/Jump.wav" id="4_fr4n8"]
 [ext_resource type="AudioStream" uid="uid://dk3etdv2afwcx" path="res://snd/Bump.wav" id="6_xeir6"]
 [ext_resource type="AudioStream" uid="uid://bvalyba8k8tsy" path="res://snd/Hurt.wav" id="9_lqals"]

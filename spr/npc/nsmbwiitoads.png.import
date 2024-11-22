@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bftnbrhilvpis"
-path="res://.godot/imported/nsmbwiitoads.png-aa26a3da02ef9860a1ad0e1b5b38497d.ctex"
+path="res://.godot/imported/nsmbwiitoads.png-b0b9892dd3a1414458c3b14fcb3ba0ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spr/nsmbwiitoads.png"
-dest_files=["res://.godot/imported/nsmbwiitoads.png-aa26a3da02ef9860a1ad0e1b5b38497d.ctex"]
+source_file="res://spr/npc/nsmbwiitoads.png"
+dest_files=["res://.godot/imported/nsmbwiitoads.png-b0b9892dd3a1414458c3b14fcb3ba0ce.ctex"]
 
 [params]
 

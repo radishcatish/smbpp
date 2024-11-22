@@ -78,7 +78,7 @@ const RUN_SPEED := 160
 const ACCEL := 8.0
 
 func _process(delta):
-	if locked:
+	if locked or health < 1:
 		state = PlayerState.NONE
 		sprite.play(&"invisible")
 		return
@@ -194,7 +194,7 @@ func _process(delta):
 
 	
 func _physics_process(_delta):
-	if locked: return
+	if locked or health < 1: return
 	just_now_not_on_floor = not is_on_floor() and last_on_floor
 	just_now_on_floor = is_on_floor() and not last_on_floor
 	last_on_floor = is_on_floor()

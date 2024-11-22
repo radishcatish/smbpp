@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmjvsdb2fuwsk"]
+
+[ext_resource type="Texture2D" uid="uid://bgxxcqp6fupm8" path="res://spr/mario/mario.png" id="1_favyc"]
+[ext_resource type="AudioStream" uid="uid://uy5fm0hrplxt" path="res://snd/Die.wav" id="2_g3b6o"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_favyc")
+region_enabled = true
+region_rect = Rect2(344, 88, 16, 16)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_g3b6o")
+autoplay = true

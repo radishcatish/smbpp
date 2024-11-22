@@ -50,10 +50,9 @@ func _process(delta: float) -> void:
 			
 			if healthbefore < 0:
 				hpcounter.scale = Vector2(1.1,1.1)
-				get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
 			else:
 				hpcounter.scale = Vector2(.9,.9)
-				get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
+			get_tree().create_tween().tween_property(hpcounter, "scale", Vector2(1,1), 0.3).set_ease(Tween.EASE_OUT)
 		
 		healthbefore = mario.health
 		
