@@ -9,10 +9,10 @@ extends CanvasLayer
 @onready var text: Sprite2D = $hpcounter/text
 @onready var camera: Camera2D = $Camera2D
 
-
+var deadmario = preload("res://scn/mariodeathsequebnce.tscn")
 var last_pos = Vector2.ZERO
 var positional_velocity = Vector2.ZERO
- 
+var marioIsNotDeadLOLLLLLLLLLLLLLLLLLLLLLL = true
 @onready var mario = get_tree().get_first_node_in_group("Player")
 var marioexists: bool = true
 
@@ -21,7 +21,7 @@ func _ready() -> void:
 	if is_instance_valid(get_tree().get_first_node_in_group("Player")):
 		mario = get_tree().get_first_node_in_group("Player")
 		camera.global_position = mario.global_position
-		
+	
 	else:
 		visible = false
 		marioexists = false
@@ -70,3 +70,13 @@ func _process(delta: float) -> void:
 			lerp(camera.offset.x,  positional_velocity.x / 16.0, 6.0 * delta),
 			lerp(camera.offset.y, (10 * float(Input.get_axis("up", "down"))) + -24.0 + positional_velocity.y / 24.0, 10.0 * delta)
 			) 
+			
+		if mario.health < 1 and marioIsNotDeadLOLLLLLLLLLLLLLLLLLLLLLL:
+			var eihgiorhg = deadmario.instantiate()
+			mario.get_parent().add_child(eihgiorhg)
+			eihgiorhg.position = mario.position
+			mario.health = 0
+			marioIsNotDeadLOLLLLLLLLLLLLLLLLLLLLLL = false
+		elif mario.health > 0:
+			marioIsNotDeadLOLLLLLLLLLLLLLLLLLLLLLL = true
+			

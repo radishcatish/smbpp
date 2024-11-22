@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://dqbduxtp1vl5j"]
+[gd_scene load_steps=30 format=4 uid="uid://dqbduxtp1vl5j"]
 
 [ext_resource type="PackedScene" uid="uid://51q6v0lr6uxo" path="res://lvl/cavebackground.tscn" id="1_l1s8x"]
 [ext_resource type="PackedScene" uid="uid://bgospolx8ma8j" path="res://tilesets/basetilemap.tscn" id="2_3e1c0"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scr/throwaway/tutorial1fall.gd" id="15_76a5x"]
 [ext_resource type="PackedScene" uid="uid://cbli7eokx8ll8" path="res://scn/fade.tscn" id="15_mshqd"]
 [ext_resource type="AudioStream" uid="uid://247ao758fmio" path="res://mus/fall.wav" id="16_0f445"]
+[ext_resource type="PackedScene" uid="uid://cau5ns4b45pg2" path="res://scn/piranaplant.tscn" id="17_ptc38"]
 
 [sub_resource type="Gradient" id="Gradient_ovfdr"]
 offsets = PackedFloat32Array(0.92, 1)
@@ -383,5 +384,28 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-3296, 336)
 shape = SubResource("RectangleShape2D_bjccy")
+
+[node name="piranaplant5" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(32, 16)
+
+[node name="piranaplant6" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(-32, -80)
+rotation = 2.20712
+
+[node name="piranaplant4" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(-63.1074, -47.4866)
+rotation = 1.47142
+
+[node name="piranaplant3" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(80, -48)
+rotation = -2.03803
+
+[node name="piranaplant2" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(-48, -1.43051e-06)
+rotation = 0.735708
+
+[node name="piranaplant" parent="." instance=ExtResource("17_ptc38")]
+position = Vector2(64, -128)
+rotation = -2.77374
 
 [connection signal="timeout" from="Area2D/Timer" to="Area2D" method="_on_timer_timeout"]

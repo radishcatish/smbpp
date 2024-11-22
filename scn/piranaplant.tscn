@@ -62,6 +62,7 @@ frame_progress = 0.52141
 offset = Vector2(0, -8)
 
 [node name="hurtbox" type="Area2D" parent="stem"]
+visible = false
 position = Vector2(0, -4)
 script = ExtResource("2_cos4w")
 

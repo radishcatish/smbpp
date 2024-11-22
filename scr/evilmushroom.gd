@@ -11,6 +11,7 @@ var positional_velocity = Vector2.ZERO
 var last_pos = Vector2.ZERO
 var marioDead = false
 
+
 @onready var squish: AudioStreamPlayer2D = $Squish
 
 func _ready() -> void:
@@ -24,7 +25,9 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	
 	if marioexists:
+		var distToMario = (mario.position - position).length_squared()
 		if last_pos != position:
 			
 			positional_velocity = last_pos - position
@@ -38,16 +41,16 @@ func _physics_process(_delta: float) -> void:
 			turningSharpness = .2
 			
 		mushroomAngle = lerp(mushroomAngle, marioDir, 0.01 * (difficulty * 1.5 ) * turningSharpness)
-		position += mushroomAngle * (difficulty / 2)
+		if !marioDead:
+		
+			position += mushroomAngle * (difficulty / 2)
 		cam.scale.x = 1 + positional_velocity.length_squared()
 		cam.scale.y = cam.scale.x
 		cam.position = mushroomAngle
 		
-		if (mario.position - position).length_squared() < 20:
+		if distToMario < 120:
 			mario.health = 0
 			marioDead = true
-			marioDir = Vector2(-1,-.7)
-			difficulty = 8
-			turningSharpness = .2
-			squish.play()
+	
+			
 		
