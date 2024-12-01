@@ -11,9 +11,6 @@ var positional_velocity = Vector2.ZERO
 var last_pos = Vector2.ZERO
 var marioDead = false
 
-
-@onready var squish: AudioStreamPlayer2D = $Squish
-
 func _ready() -> void:
 	if turningSharpness < 0.1:
 		turningSharpness = 0.1

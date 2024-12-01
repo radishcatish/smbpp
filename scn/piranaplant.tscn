@@ -37,6 +37,7 @@ size = Vector2(12, 14)
 script = ExtResource("1_tffex")
 
 [node name="mariodetectionradius" type="Area2D" parent="."]
+visible = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mariodetectionradius"]

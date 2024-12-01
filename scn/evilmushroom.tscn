@@ -1,29 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://diyjiy03esx8m"]
+[gd_scene load_steps=5 format=3 uid="uid://diyjiy03esx8m"]
 
 [ext_resource type="Script" path="res://scr/evilmushroom.gd" id="1_trdem"]
 [ext_resource type="Texture2D" uid="uid://chviky7i2kmc4" path="res://spr/object/EVIL FUCKING  OJNE PV MYURG30ORI4EHJGV34WHJOQITIGWTBEIHEGQWRTJIWEQBTJI;PELBQRTJ;IPOWTBER4;I2PGB4OTLRWQJU.png" id="2_oyxxu"]
 [ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_dphmp"]
-[ext_resource type="Texture2D" uid="uid://cl08umopj1c40" path="res://spr/misc/circle.svg" id="5_hl1ja"]
-[ext_resource type="AudioStream" uid="uid://b6wjyal1cmod2" path="res://snd/static.wav" id="5_l1nue"]
-
-[sub_resource type="Curve" id="Curve_o70pj"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.032967), -2.80468, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_34h04"]
-curve = SubResource("Curve_o70pj")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_npw7o"]
-particle_flag_disable_z = true
-inherit_velocity_ratio = 0.255
-spread = 180.0
-initial_velocity_min = -10.0
-initial_velocity_max = -10.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.02
-scale_max = 0.02
-scale_curve = SubResource("CurveTexture_34h04")
-color = Color(1, 1, 1, 0.0392157)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_se7ry"]
 radius = 109.115
@@ -32,16 +11,11 @@ radius = 109.115
 script = ExtResource("1_trdem")
 
 [node name="evil fvuckng iotherghtitrehioptgeqwhjopi[tergqw" type="Sprite2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 z_index = 4096
 texture_filter = 1
 texture = ExtResource("2_oyxxu")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="evil fvuckng iotherghtitrehioptgeqwhjopi[tergqw"]
-modulate = Color(0.356863, 1, 0, 1)
-z_index = -1
-amount = 256
-process_material = SubResource("ParticleProcessMaterial_npw7o")
-texture = ExtResource("5_hl1ja")
 
 [node name="cam" type="Area2D" parent="."]
 visible = false
@@ -54,7 +28,7 @@ color = Color(0, 1, 0, 1)
 texture = ExtResource("3_dphmp")
 texture_scale = 0.2
 
-[node name="Squish" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_l1nue")
-autoplay = true
-attenuation = 70.0
+[node name="Costume2" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0, 0.388235)
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("3_dphmp")
