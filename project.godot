@@ -30,11 +30,9 @@ global="*res://scn/hud.tscn"
 
 [display]
 
-window/size/viewport_width=256
-window/size/viewport_height=224
+window/size/viewport_width=384
+window/size/viewport_height=336
 window/size/always_on_top=true
-window/size/window_width_override=512
-window/size/window_height_override=448
 window/energy_saving/keep_screen_on=false
 window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
@@ -417,3 +415,4 @@ menu={
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 0)
+2d/snap/snap_2d_vertices_to_pixel=true

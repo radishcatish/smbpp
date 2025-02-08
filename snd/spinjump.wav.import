@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ddl8oxo3wij1x"
-path="res://.godot/imported/ouch3.wav-005fab12dd4c31ab0da236a8678c412a.sample"
+uid="uid://bqdahih683yxq"
+path="res://.godot/imported/spinjump.wav-ed185cca483a524705646b9fec015eb1.sample"
 
 [deps]
 
-source_file="res://snd/specific/mario/ouch3.wav"
-dest_files=["res://.godot/imported/ouch3.wav-005fab12dd4c31ab0da236a8678c412a.sample"]
+source_file="res://snd/spinjump.wav"
+dest_files=["res://.godot/imported/spinjump.wav-ed185cca483a524705646b9fec015eb1.sample"]
 
 [params]
 
