@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://scm82onu12ne"]
 
-[ext_resource type="Script" path="res://scr/mariolight.gd" id="1_tl1oh"]
+[ext_resource type="Script" uid="uid://7h03c025ylqt" path="res://scr/mariolight.gd" id="1_tl1oh"]
 [ext_resource type="Texture2D" uid="uid://cl08umopj1c40" path="res://spr/misc/circle.svg" id="2_7xdie"]
 [ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_q5dt0"]
 
@@ -21,7 +21,7 @@ point_count = 2
 curve = SubResource("Curve_a2ddp")
 
 [sub_resource type="Curve" id="Curve_ogpkq"]
-max_value = 30.0
+_limits = [0.0, 30.0, 0.0, 1.0]
 _data = [Vector2(0.486667, 30), 0.0, 0.0, 0, 0]
 point_count = 1
 
@@ -79,5 +79,5 @@ texture = ExtResource("3_q5dt0")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 amount = 20
-process_material = SubResource("ParticleProcessMaterial_jatl8")
 texture = ExtResource("2_7xdie")
+process_material = SubResource("ParticleProcessMaterial_jatl8")

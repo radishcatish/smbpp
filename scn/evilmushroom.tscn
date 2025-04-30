@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://diyjiy03esx8m"]
 
-[ext_resource type="Script" path="res://scr/evilmushroom.gd" id="1_trdem"]
+[ext_resource type="Script" uid="uid://bycysgduvupqd" path="res://scr/evilmushroom.gd" id="1_trdem"]
 [ext_resource type="Texture2D" uid="uid://chviky7i2kmc4" path="res://spr/object/EVIL FUCKING  OJNE PV MYURG30ORI4EHJGV34WHJOQITIGWTBEIHEGQWRTJIWEQBTJI;PELBQRTJ;IPOWTBER4;I2PGB4OTLRWQJU.png" id="2_oyxxu"]
 [ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_dphmp"]
 

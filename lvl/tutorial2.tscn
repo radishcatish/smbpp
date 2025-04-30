@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cnybnjrewsp1x" path="res://scn/mario.tscn" id="1_es3so"]
 [ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_7mpd4"]
 [ext_resource type="PackedScene" uid="uid://cbli7eokx8ll8" path="res://scn/fade.tscn" id="3_q324j"]
-[ext_resource type="Script" path="res://scr/throwaway/letmartiomove.gd" id="4_n1w4l"]
+[ext_resource type="Script" uid="uid://cbt3f5geph4d" path="res://scr/throwaway/letmartiomove.gd" id="4_n1w4l"]
 [ext_resource type="PackedScene" uid="uid://cjgyv8b0yyisf" path="res://tilesets/sewer_pipes.tscn" id="5_ww8ld"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1u6h5"]

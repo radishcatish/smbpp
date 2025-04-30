@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://ckbcwn74hx58b" path="res://spr/npc/goomba.png" id="9_81gi2"]
 [ext_resource type="Texture2D" uid="uid://dftfm6r4cqjm3" path="res://spr/npc/parabeetle.png" id="10_tclen"]
 [ext_resource type="AudioStream" uid="uid://5jl120hv5x7p" path="res://mus/wind.wav" id="11_mujb2"]
-[ext_resource type="Script" path="res://scr/throwaway/cutscenemario1.gd" id="13_thrpt"]
-[ext_resource type="Script" path="res://scr/throwaway/tutorial1fall.gd" id="15_76a5x"]
+[ext_resource type="Script" uid="uid://l6to0n3xmmbp" path="res://scr/throwaway/cutscenemario1.gd" id="13_thrpt"]
+[ext_resource type="Script" uid="uid://bgnm8jeuipv6y" path="res://scr/throwaway/tutorial1fall.gd" id="15_76a5x"]
 [ext_resource type="PackedScene" uid="uid://cbli7eokx8ll8" path="res://scn/fade.tscn" id="15_mshqd"]
 [ext_resource type="AudioStream" uid="uid://247ao758fmio" path="res://mus/fall.wav" id="16_0f445"]
 

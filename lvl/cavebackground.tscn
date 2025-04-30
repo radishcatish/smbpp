@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://51q6v0lr6uxo"]
 
-[ext_resource type="Script" path="res://scr/cavebackground.gd" id="1_gkunv"]
+[ext_resource type="Script" uid="uid://pisb0xyhhnpx" path="res://scr/cavebackground.gd" id="1_gkunv"]
 [ext_resource type="Texture2D" uid="uid://y40tkxd8x5y1" path="res://tilesets/backgroundcave.png" id="1_tqsiu"]
 
 [node name="cavebackground" type="Node2D"]

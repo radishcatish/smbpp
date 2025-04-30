@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://cau5ns4b45pg2"]
 
-[ext_resource type="Script" path="res://scr/piranaplant.gd" id="1_tffex"]
+[ext_resource type="Script" uid="uid://bqa66x3ewgh8x" path="res://scr/piranaplant.gd" id="1_tffex"]
 [ext_resource type="Texture2D" uid="uid://64w4luxunp5s" path="res://spr/npc/piranaplant.png" id="1_yaj6b"]
-[ext_resource type="Script" path="res://scr/hurtbox.gd" id="2_cos4w"]
+[ext_resource type="Script" uid="uid://djlvfnrd2w22x" path="res://scr/hurtbox.gd" id="2_cos4w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_favrr"]
 radius = 50.0

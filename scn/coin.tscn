@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://6b0rq2byybtt"]
 
-[ext_resource type="Script" path="res://scr/coin.gd" id="1_7i5vq"]
+[ext_resource type="Script" uid="uid://j8u4kbdjq6d5" path="res://scr/coin.gd" id="1_7i5vq"]
 [ext_resource type="Texture2D" uid="uid://b0302qluavvya" path="res://spr/object/coin.png" id="1_pajl6"]
 [ext_resource type="Texture2D" uid="uid://c3n68jcsnqbe8" path="res://spr/misc/costume2.svg" id="3_nsvdl"]
 

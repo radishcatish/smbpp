@@ -1,6 +1,6 @@
 [gd_scene load_steps=39 format=3 uid="uid://cnybnjrewsp1x"]
 
-[ext_resource type="Script" path="res://scr/player.gd" id="1_8rros"]
+[ext_resource type="Script" uid="uid://3wq5qplw0c27" path="res://scr/player.gd" id="1_8rros"]
 [ext_resource type="FontFile" uid="uid://ca424fvxues8e" path="res://spr/misc/Super Mario Bros. NES.ttf" id="2_616v5"]
 [ext_resource type="Texture2D" uid="uid://bgxxcqp6fupm8" path="res://spr/mario/mario.png" id="3_8uv0f"]
 [ext_resource type="AudioStream" uid="uid://bqdahih683yxq" path="res://snd/spinjump.wav" id="3_b1uxm"]

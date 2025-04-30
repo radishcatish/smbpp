@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmjvsdb2fuwsk"]
 
-[ext_resource type="Script" path="res://scr/mariodeathsequebnce.gd" id="1_aty8b"]
+[ext_resource type="Script" uid="uid://cumia0ycudigf" path="res://scr/mariodeathsequebnce.gd" id="1_aty8b"]
 [ext_resource type="Texture2D" uid="uid://bgxxcqp6fupm8" path="res://spr/mario/mario.png" id="1_favyc"]
 [ext_resource type="AudioStream" uid="uid://uy5fm0hrplxt" path="res://snd/Die.wav" id="2_g3b6o"]
 
