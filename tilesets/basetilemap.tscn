@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgospolx8ma8j"]
+[gd_scene format=3 uid="uid://bgospolx8ma8j"]
 
 [ext_resource type="Texture2D" uid="uid://di1w6lxxs01r4" path="res://tilesets/basetilemap.png" id="1_gcaal"]
 
@@ -1070,7 +1070,7 @@ physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_8xik6")
 
-[node name="basetilemap" type="TileMapLayer"]
+[node name="basetilemap" type="TileMapLayer" unique_id=1155838015]
 texture_filter = 1
 texture_repeat = 1
 tile_set = SubResource("TileSet_wag75")
