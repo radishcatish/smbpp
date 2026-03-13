@@ -1,16 +1,32 @@
 [gd_scene format=3 uid="uid://dak6umi84ekga"]
 
 [ext_resource type="SpriteFrames" uid="uid://d0u7xmwqyfruy" path="res://spr/mario.ase" id="1_i4cxp"]
+[ext_resource type="Script" uid="uid://bmpgjj0mu8g2d" path="res://scr/mario_main.gd" id="1_tps34"]
+[ext_resource type="Script" uid="uid://ieg0kimgpept" path="res://scr/mario_input.gd" id="2_nlsqo"]
+[ext_resource type="Script" uid="uid://580kryklfl85" path="res://scr/mario_visual.gd" id="3_nlsqo"]
+[ext_resource type="AudioStream" uid="uid://dk3etdv2afwcx" path="res://snd/Bump.wav" id="5_4eic3"]
+[ext_resource type="AudioStream" uid="uid://bvalyba8k8tsy" path="res://snd/Hurt.wav" id="6_sef5i"]
+[ext_resource type="AudioStream" uid="uid://cred55pffpb4c" path="res://snd/Jump.wav" id="7_8w1hq"]
+[ext_resource type="AudioStream" uid="uid://cmq8rs30cpvij" path="res://snd/Kick.wav" id="8_lwob8"]
+[ext_resource type="AudioStream" uid="uid://bs8eb34ong7ap" path="res://snd/Skid.wav" id="9_tluor"]
+[ext_resource type="AudioStream" uid="uid://bqdahih683yxq" path="res://snd/spinjump.wav" id="10_ud1li"]
+[ext_resource type="AudioStream" uid="uid://8i617b8crluc" path="res://snd/whoosh.wav" id="11_sef5i"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4cxp"]
-size = Vector2(8, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tps34"]
+radius = 3.0
+height = 8.0
 
 [node name="Mario" type="CharacterBody2D" unique_id=1343868702]
+script = ExtResource("1_tps34")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=443437405]
+[node name="InputHelper" type="Node" parent="." unique_id=2011231507]
+script = ExtResource("2_nlsqo")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=443437405]
 sprite_frames = ExtResource("1_i4cxp")
 animation = &"idle"
 autoplay = "idle"
+script = ExtResource("3_nlsqo")
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": false,
 "pending_changes": {
@@ -28,6 +44,34 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 }
 
+[node name="Bump" type="AudioStreamPlayer" parent="Sprite" unique_id=1742980408]
+stream = ExtResource("5_4eic3")
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Sprite" unique_id=419096260]
+stream = ExtResource("6_sef5i")
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sprite" unique_id=407424795]
+stream = ExtResource("7_8w1hq")
+
+[node name="Kick" type="AudioStreamPlayer" parent="Sprite" unique_id=1848409156]
+stream = ExtResource("8_lwob8")
+
+[node name="Skid" type="AudioStreamPlayer" parent="Sprite" unique_id=684785920]
+stream = ExtResource("9_tluor")
+
+[node name="Spinjump" type="AudioStreamPlayer" parent="Sprite" unique_id=414985251]
+stream = ExtResource("10_ud1li")
+
+[node name="Whoosh" type="AudioStreamPlayer" parent="Sprite" unique_id=1429507730]
+stream = ExtResource("11_sef5i")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1753936273]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_i4cxp")
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_tps34")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1781395103]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=492127393]
+polygon = PackedVector2Array(-3, 2, 0, -7, 3, 2, 3, 3, -3, 3)
