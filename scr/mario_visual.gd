@@ -24,6 +24,8 @@ func _physics_process(_d):
 				play("walk", abs(mario.velocity.x) / 100)
 		else:
 			play("idle")
+		if mario.state == mario.PlayerState.DIVE:
+			play("divelay")
 	else:
 		if mario.state == mario.PlayerState.GENERAL:
 			if not mario.is_on_wall_only():
@@ -32,3 +34,6 @@ func _physics_process(_d):
 				frame = int(t * 3)
 			else:
 				play("onwall")
+		else:
+			if mario.state == mario.PlayerState.DIVE:
+				rotation = mario.velocity.angle() if dir == 1 else mario.velocity.angle() + PI

@@ -1,5 +1,8 @@
 extends Node
 class_name InputHelper
+@onready var mario: Mario = $".."
+
+
 var last_z_press: int = 0999
 var last_x_press: int = 0999
 var last_c_press: int = 0999
@@ -28,5 +31,7 @@ func _physics_process(_d):
 	c_pressed = Input.is_action_pressed("c")
 	shift_pressed = Input.is_action_pressed("shift")
 	menu_just_pressed = Input.is_action_just_pressed("menu")
-	d = Vector2(Input.get_axis("left", "right"), Input.get_axis("down", "up"))
+	
+	if not mario.state == mario.PlayerState.DIVE:
+		d = Vector2(Input.get_axis("left", "right"), Input.get_axis("down", "up"))
 	
